@@ -1,3 +1,13 @@
+---
+title: Customer Churn API
+emoji: 📊
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 8000
+pinned: false
+---
+
 # 📊 Telco Customer Churn Prediction System
 
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11-blue.svg)](https://www.python.org/)
