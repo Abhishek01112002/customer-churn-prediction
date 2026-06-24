@@ -16,7 +16,7 @@ COPY src/ ./src/
 COPY app/ ./app/
 COPY models/ ./models/
 
-EXPOSE 8000
+EXPOSE 7860
 
-# Run FastAPI using uvicorn
-CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run FastAPI using uvicorn on port 7860
+CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "7860"]
