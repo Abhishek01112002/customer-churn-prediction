@@ -18,13 +18,17 @@ PREPROCESSOR_PATH = os.path.join(MODEL_DIR, f'preprocessor_{VERSION}.pkl')
 
 # Feature sets
 TARGET = 'Churn'
-NUMERICAL_FEATURES = ['tenure', 'MonthlyCharges', 'TotalCharges']
+NUMERICAL_FEATURES = [
+    'tenure', 'MonthlyCharges', 'TotalCharges', 
+    'Number_of_Services', 'Monthly_to_Total_Ratio', 'Avg_Charges_Per_Month'
+]
 CATEGORICAL_FEATURES = [
     'gender', 'SeniorCitizen', 'Partner', 'Dependents',
     'PhoneService', 'MultipleLines', 'InternetService',
     'OnlineSecurity', 'OnlineBackup', 'DeviceProtection',
     'TechSupport', 'StreamingTV', 'StreamingMovies',
-    'Contract', 'PaperlessBilling', 'PaymentMethod'
+    'Contract', 'PaperlessBilling', 'PaymentMethod',
+    'Is_Automatic_Payment', 'Has_Internet'
 ]
 
 # Random state for reproducibility

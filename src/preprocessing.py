@@ -24,15 +24,33 @@ def load_and_clean_data(filepath=config.DATA_PATH):
         df['TotalCharges'] = df['TotalCharges'].fillna(df['TotalCharges'].median())
     
     logger.info("Performing feature engineering...")
+    # Feature A: Service Count
+    services = ['PhoneService', 'MultipleLines', 'OnlineSecurity', 'OnlineBackup', 
+                'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies']
+    df['Number_of_Services'] = 0
+    for col in services:
+        df['Number_of_Services'] += df[col].apply(lambda x: 1 if x == 'Yes' else 0)
+
+    # Feature B: Automatic Payment Indicator
+    df['Is_Automatic_Payment'] = df['PaymentMethod'].apply(lambda x: 1 if 'automatic' in str(x).lower() else 0)
+
+    # Feature C: Ratio of Monthly to Total Charges
+    df['Monthly_to_Total_Ratio'] = df['MonthlyCharges'] / (df['TotalCharges'] + 1)
+
+    # Feature D: Average monthly charges based on tenure
+    df['Avg_Charges_Per_Month'] = df['TotalCharges'] / (df['tenure'] + 1)
+
+    # Feature E: Has Internet
+    df['Has_Internet'] = df['InternetService'].apply(lambda x: 0 if x == 'No' else 1)
+
     # 'tenure_group': categorize tenure
     labels = ['0-12', '13-24', '25-36', '37-48', '49-60', '61-72']
-    # Add a buffer up to 100 for bins to catch max values just in case
     df['tenure_group'] = pd.cut(df['tenure'], bins=[0, 12, 24, 36, 48, 60, 100], right=False, labels=labels)
-    df['tenure_group'] = df['tenure_group'].astype(str) # convert from categorical to string for OHE
+    df['tenure_group'] = df['tenure_group'].astype(str)
 
     # Drop customerID 
     if 'customerID' in df.columns:
-        df.drop('customerID', axis=1, inplace=True)
+        df = df.drop('customerID', axis=1)
     
     # Target encoding
     if config.TARGET in df.columns:

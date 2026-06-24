@@ -26,7 +26,7 @@ A production-grade, end-to-end Machine Learning system predicting customer churn
 
 ---
 
-## 🏗️ Architecture Design
+##  Architecture Design
 
 This system implements a decoupled, modern architecture separating the backend prediction engine from the frontend client.
 
@@ -57,7 +57,7 @@ sequenceDiagram
 
 ---
 
-## ⚡ Key Features
+##  Key Features
 
 1. **Separation of Concerns**: Separate, independent services for backend APIs (FastAPI) and frontend user interfaces (Streamlit).
 2. **Robust Inference Preprocessing**: Real-time feature engineering (tenure grouping, TotalCharges casting, whitespace null value handling) applied identically to inference records.
@@ -109,7 +109,7 @@ customer-churn/
 
 ---
 
-## 🚀 Local Installation & Execution
+##  Local Installation & Execution
 
 ### 1. Setup Virtual Environment
 Ensure your raw dataset file is located at `../WA_Fn-UseC_-Telco-Customer-Churn.csv`. Then, run:
@@ -156,7 +156,7 @@ docker-compose up --build
 
 ---
 
-## 🔗 Swagger API Request Examples
+##  Swagger API Request Examples
 
 ### 1. Single Customer Inference (`POST /predict`)
 ```bash
@@ -208,7 +208,7 @@ curl -X 'POST' \
 
 ---
 
-## 🛠️ Step-by-Step Deployment Instructions
+##  Step-by-Step Deployment Instructions
 
 ### 1. Deploying Streamlit Dashboard (Streamlit Community Cloud)
 Streamlit Cloud offers free hosting for public repositories:

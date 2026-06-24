@@ -21,9 +21,40 @@ def preprocess_inference_data(df: pd.DataFrame) -> pd.DataFrame:
     # Handle TotalCharges numeric conversions and missing values
     if 'TotalCharges' in df_clean.columns:
         df_clean['TotalCharges'] = pd.to_numeric(df_clean['TotalCharges'], errors='coerce')
-        # We can't easily compute training median here, but we can fill with a fallback or use column values
         df_clean['TotalCharges'] = df_clean['TotalCharges'].fillna(0.0)
         
+    # Service Count Feature
+    services = ['PhoneService', 'MultipleLines', 'OnlineSecurity', 'OnlineBackup', 
+                'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies']
+    df_clean['Number_of_Services'] = 0
+    for col in services:
+        if col in df_clean.columns:
+            df_clean['Number_of_Services'] += df_clean[col].apply(lambda x: 1 if x == 'Yes' else 0)
+
+    # Automatic Payment Indicator Feature
+    if 'PaymentMethod' in df_clean.columns:
+        df_clean['Is_Automatic_Payment'] = df_clean['PaymentMethod'].apply(lambda x: 1 if 'automatic' in str(x).lower() else 0)
+    else:
+        df_clean['Is_Automatic_Payment'] = 0
+
+    # Ratio of Monthly to Total Charges Feature
+    if 'MonthlyCharges' in df_clean.columns and 'TotalCharges' in df_clean.columns:
+        df_clean['Monthly_to_Total_Ratio'] = df_clean['MonthlyCharges'] / (df_clean['TotalCharges'] + 1)
+    else:
+        df_clean['Monthly_to_Total_Ratio'] = 0.0
+
+    # Average monthly charges based on tenure Feature
+    if 'TotalCharges' in df_clean.columns and 'tenure' in df_clean.columns:
+        df_clean['Avg_Charges_Per_Month'] = df_clean['TotalCharges'] / (df_clean['tenure'] + 1)
+    else:
+        df_clean['Avg_Charges_Per_Month'] = 0.0
+
+    # Has Internet Feature
+    if 'InternetService' in df_clean.columns:
+        df_clean['Has_Internet'] = df_clean['InternetService'].apply(lambda x: 0 if x == 'No' else 1)
+    else:
+        df_clean['Has_Internet'] = 0
+
     if 'tenure' in df_clean.columns:
         labels = ['0-12', '13-24', '25-36', '37-48', '49-60', '61-72']
         df_clean['tenure_group'] = pd.cut(df_clean['tenure'], bins=[0, 12, 24, 36, 48, 60, 100], right=False, labels=labels)

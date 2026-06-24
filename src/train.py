@@ -105,10 +105,10 @@ def run_training():
     smote = SMOTE(random_state=config.RANDOM_STATE)
     
     models = {
-        'Logistic Regression': LogisticRegression(random_state=config.RANDOM_STATE, max_iter=1000),
+        'Logistic Regression': LogisticRegression(random_state=config.RANDOM_STATE, max_iter=1000, class_weight='balanced'),
         'Decision Tree': DecisionTreeClassifier(random_state=config.RANDOM_STATE, max_depth=8),
-        'Random Forest': RandomForestClassifier(random_state=config.RANDOM_STATE, n_estimators=100),
-        'XGBoost': XGBClassifier(random_state=config.RANDOM_STATE, use_label_encoder=False, eval_metric='logloss')
+        'Random Forest': RandomForestClassifier(random_state=config.RANDOM_STATE, n_estimators=200, max_depth=10, min_samples_split=5, class_weight='balanced'),
+        'XGBoost': XGBClassifier(random_state=config.RANDOM_STATE, n_estimators=150, max_depth=4, learning_rate=0.05, scale_pos_weight=1.5, eval_metric='logloss')
     }
     
     results = []
