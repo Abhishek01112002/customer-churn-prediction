@@ -6,7 +6,6 @@ import requests
 import pandas as pd
 import numpy as np
 import streamlit as st
-import streamlit.components.v1 as components
 import plotly.express as px
 import plotly.graph_objects as go
 from PIL import Image
@@ -42,31 +41,23 @@ st.set_page_config(
 )
 
 # ─── Disable Browser Auto-Translation (Google Chrome) to Prevent React DOM Text Duplication ───
-components.html(
-    """
-    <script>
-    (function() {
-        try {
-            var doc = window.parent.document;
-            doc.documentElement.setAttribute('translate', 'no');
-            doc.documentElement.classList.add('notranslate');
-            if (doc.body) {
-                doc.body.setAttribute('translate', 'no');
-                doc.body.classList.add('notranslate');
-            }
-            if (!doc.querySelector('meta[name="google"][content="notranslate"]')) {
-                var meta = doc.createElement('meta');
-                meta.name = 'google';
-                meta.content = 'notranslate';
-                doc.head.appendChild(meta);
-            }
-        } catch (e) {}
-    })();
-    </script>
-    """,
-    height=0,
-    width=0,
-)
+if hasattr(st, "html"):
+    st.html(
+        """
+        <script>
+        (function() {
+            try {
+                document.documentElement.setAttribute('translate', 'no');
+                document.documentElement.classList.add('notranslate');
+                if (document.body) {
+                    document.body.setAttribute('translate', 'no');
+                    document.body.classList.add('notranslate');
+                }
+            } catch (e) {}
+        })();
+        </script>
+        """
+    )
 
 # ══════════════════════════════════════════════════════════════════════
 #  ENTERPRISE DESIGN SYSTEM (Linear / Stripe / Vercel Aesthetic)
