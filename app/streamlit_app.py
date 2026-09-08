@@ -193,37 +193,78 @@ st.markdown(
         box-shadow: 0 0 0 1px var(--slate-900) !important;
     }
 
-    /* ─── Slider Styling ─── */
-    .stSlider > div > div > div > div {
-        background-color: var(--slate-900) !important;
+    /* ─── Slider Styling: Guaranteed 100% Visibility ─── */
+    .stSlider label {
+        color: var(--slate-800) !important;
+        font-weight: 600 !important;
+        font-size: 0.84rem !important;
     }
-    .stSlider [data-testid="stThumbValue"] {
+    /* Floating thumb bubble number */
+    .stSlider [data-testid="stThumbValue"],
+    [data-testid="stSlider"] [data-testid="stThumbValue"],
+    [data-testid="stSlider"] [data-baseweb="slider"] [role="slider"] [data-testid="stThumbValue"] {
+        background-color: #0F172A !important;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-family: var(--font-mono) !important;
+        font-weight: 700 !important;
+        font-size: 0.85rem !important;
+        padding: 3px 8px !important;
+        border-radius: 4px !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25) !important;
+    }
+    /* Tick numbers (0, 72, etc.) and slider labels */
+    .stSlider [data-testid="stSliderTickBarMin"],
+    .stSlider [data-testid="stSliderTickBarMax"],
+    .stSlider div[data-testid="stTickBar"] div,
+    [data-testid="stSlider"] span,
+    [data-testid="stSlider"] div {
+        color: #334155 !important;
+        -webkit-text-fill-color: #334155 !important;
         font-family: var(--font-mono) !important;
         font-weight: 600 !important;
-        color: var(--slate-900) !important;
+        font-size: 0.82rem !important;
     }
 
-    /* ─── Primary CTA Button (Linear / Stripe style) ─── */
+    /* ─── Primary CTA Button (Linear / Stripe style): Guaranteed Pure White Text ─── */
+    .stButton > button[kind="primary"],
+    button[data-testid="stBaseButton-primary"],
+    .stButton > button[kind="primary"] *,
+    button[data-testid="stBaseButton-primary"] *,
+    .stButton > button[kind="primary"] p,
+    button[data-testid="stBaseButton-primary"] p,
+    .stButton > button[kind="primary"] span,
+    button[data-testid="stBaseButton-primary"] span,
+    .stButton > button[kind="primary"] div,
+    button[data-testid="stBaseButton-primary"] div {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+    }
+
     .stButton > button[kind="primary"],
     button[data-testid="stBaseButton-primary"] {
-        background-color: var(--slate-900) !important;
-        color: var(--white) !important;
-        border: 1px solid var(--slate-800) !important;
+        background-color: #0F172A !important;
+        border: 1px solid #1E293B !important;
         border-radius: 6px !important;
         font-family: var(--font-sans) !important;
         font-weight: 600 !important;
-        font-size: 0.92rem !important;
-        padding: 0.65rem 1.6rem !important;
+        font-size: 0.95rem !important;
+        padding: 0.7rem 1.8rem !important;
         letter-spacing: -0.01em !important;
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
         transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
     .stButton > button[kind="primary"]:hover,
     button[data-testid="stBaseButton-primary"]:hover {
-        background-color: var(--slate-800) !important;
-        border-color: var(--slate-700) !important;
+        background-color: #1E293B !important;
+        border-color: #334155 !important;
         transform: translateY(-1px);
         box-shadow: 0 4px 8px -2px rgba(15, 23, 42, 0.15), 0 2px 4px -2px rgba(15, 23, 42, 0.1) !important;
+    }
+    .stButton > button[kind="primary"]:hover *,
+    button[data-testid="stBaseButton-primary"]:hover * {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
     }
     .stButton > button[kind="primary"]:active,
     button[data-testid="stBaseButton-primary"]:active {
@@ -1181,11 +1222,11 @@ if active_nav == "Single Assessment":
         tenure = st.slider("Tenure Duration (Months)", min_value=0, max_value=72, value=12)
         years = tenure / 12.0
         if tenure <= 12:
-            stage_pill = f'<span class="context-pill new">🐣 New Customer ({tenure} mos · {years:.1f} yrs) • Critical Onboarding Zone</span>'
+            stage_pill = f'<div style="margin-top: 4px; display: flex; align-items: center; gap: 8px;"><span style="font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; color: #0F172A; background-color: #E2E8F0; padding: 3px 8px; border-radius: 4px;">{tenure} Months</span><span class="context-pill new">🐣 New Customer ({years:.1f} yrs) • Critical Onboarding</span></div>'
         elif tenure <= 36:
-            stage_pill = f'<span class="context-pill est">📈 Established Account ({tenure} mos · {years:.1f} yrs) • Growth Lifecycle</span>'
+            stage_pill = f'<div style="margin-top: 4px; display: flex; align-items: center; gap: 8px;"><span style="font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; color: #0F172A; background-color: #E2E8F0; padding: 3px 8px; border-radius: 4px;">{tenure} Months</span><span class="context-pill est">📈 Established Account ({years:.1f} yrs) • Growth Stage</span></div>'
         else:
-            stage_pill = f'<span class="context-pill loyal">🛡️ Mature Loyalty ({tenure} mos · {years:.1f} yrs) • Long-Term Base</span>'
+            stage_pill = f'<div style="margin-top: 4px; display: flex; align-items: center; gap: 8px;"><span style="font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; color: #0F172A; background-color: #E2E8F0; padding: 3px 8px; border-radius: 4px;">{tenure} Months</span><span class="context-pill loyal">🛡️ Mature Loyalty ({years:.1f} yrs) • Long-Term Base</span></div>'
         st.markdown(stage_pill, unsafe_allow_html=True)
 
         c5, c6 = st.columns(2)
