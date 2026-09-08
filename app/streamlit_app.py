@@ -1362,16 +1362,16 @@ if active_nav == "Single Assessment":
                 status_label = "✅ LOW RISK • STABLE ACCOUNT"
                 sub_text = "Account displays strong retention signals (<40%). Excellent candidate for cross-selling."
 
-            # Render Premium Decision Support Panel (Clean unindented HTML to prevent Markdown code-block parsing)
+            # Render Premium Decision Support Panel (Inline styles for bulletproof rendering on Cloud)
             pin_left = min(max(pct, 2.0), 98.0)
             panel_html = (
-                f'<div class="result-panel">'
-                f'<div class="result-header">'
-                f'<div class="result-header-left">'
-                f'<span class="score-giant {level_class}">{pct:.1f}%</span>'
+                f'<div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 10px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-top: 16px;">'
+                f'<div style="display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid #E2E8F0; margin-bottom: 16px;">'
+                f'<div style="display: flex; align-items: baseline; gap: 16px;">'
+                f'<span class="score-giant {level_class}" style="font-family: var(--font-mono); font-size: 2.8rem; font-weight: 800; line-height: 1;">{pct:.1f}%</span>'
                 f'<div>'
                 f'<span class="risk-status-badge {level_class}">{status_label}</span>'
-                f'<div style="font-size: 0.8rem; color: #64748B; margin-top: 0.35rem;">'
+                f'<div style="font-size: 0.8rem; color: #64748B; margin-top: 6px;">'
                 f'Calibrated Churn Probability • Engine: {pred_res.get("engine_source", "In-Process Engine")} • Latency: {latency}ms'
                 f'</div>'
                 f'</div>'
@@ -1381,12 +1381,22 @@ if active_nav == "Single Assessment":
                 f'<div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; color: #0F172A;">Threshold: 0.500</div>'
                 f'</div>'
                 f'</div>'
-                f'<div class="risk-meter-container">'
-                f'<div class="risk-meter-labels">'
-                f'<span>0% Safe</span><span>40% Moderate</span><span>70% High Risk</span><span>100% Critical</span>'
+                f'<div style="margin: 20px 0 10px 0;">'
+                f'<div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">'
+                f'<span style="color: #059669;">0% Safe</span>'
+                f'<span style="color: #D97706;">40% Moderate</span>'
+                f'<span style="color: #DC2626;">70% High Risk</span>'
+                f'<span style="color: #991B1B;">100% Critical</span>'
                 f'</div>'
-                f'<div class="risk-meter-track">'
-                f'<div class="risk-meter-pin" style="left: {pin_left:.1f}%;"></div>'
+                f'<div style="height: 14px; border-radius: 7px; background: linear-gradient(90deg, #10B981 0%, #10B981 35%, #F59E0B 45%, #F59E0B 65%, #EF4444 75%, #EF4444 100%); position: relative; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);">'
+                f'<div style="position: absolute; top: -5px; left: {pin_left:.1f}%; width: 24px; height: 24px; border-radius: 50%; background-color: #0F172A; border: 3px solid #FFFFFF; box-shadow: 0 2px 6px rgba(0,0,0,0.35); transform: translateX(-50%); display: flex; align-items: center; justify-content: center;">'
+                f'<div style="width: 6px; height: 6px; border-radius: 50%; background-color: #FFFFFF;"></div>'
+                f'</div>'
+                f'</div>'
+                f'<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">'
+                f'<span style="font-size: 12px; color: #64748B;">Low Risk Zone</span>'
+                f'<span style="font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: #0F172A; background: #F1F5F9; padding: 2px 8px; border-radius: 4px;">Score: {pct:.1f}% ({risk_level} Risk)</span>'
+                f'<span style="font-size: 12px; color: #DC2626; font-weight: 600;">Critical Hazard (&gt;70%)</span>'
                 f'</div>'
                 f'</div>'
                 f'</div>'
@@ -1399,19 +1409,29 @@ if active_nav == "Single Assessment":
             for item in risk_factors:
                 delta_pct = item['delta'] * 100
                 sign = "+" if item['delta'] > 0 else ""
-                delta_class = "pos" if item['delta'] > 0 else "neg"
                 icon = "🔺" if item['delta'] > 0 else "🛡️"
+                pill_bg = "#FEF2F2" if item['delta'] > 0 else "#ECFDF5"
+                pill_text = "#991B1B" if item['delta'] > 0 else "#065F46"
+                pill_border = "#FECACA" if item['delta'] > 0 else "#A7F3D0"
                 factor_rows.append(
-                    f'<div class="factor-row">'
-                    f'<div><div class="factor-name">{icon} {item["factor"]}</div>'
-                    f'<div class="factor-detail">{item["detail"]}</div></div>'
-                    f'<div class="factor-delta-bar-container"><span class="factor-delta {delta_class}">{sign}{delta_pct:.0f}% hazard impact</span></div>'
+                    f'<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #E2E8F0; font-size: 0.84rem;">'
+                    f'<div>'
+                    f'<div style="font-weight: 600; color: #0F172A; display: flex; align-items: center; gap: 6px;">{icon} {item["factor"]}</div>'
+                    f'<div style="font-size: 0.72rem; color: #64748B; margin-top: 2px;">{item["detail"]}</div>'
+                    f'</div>'
+                    f'<div style="display: flex; align-items: center; justify-content: flex-end; min-width: 140px;">'
+                    f'<span style="font-family: var(--font-mono); font-weight: 700; font-size: 0.78rem; color: {pill_text}; background-color: {pill_bg}; padding: 3px 8px; border-radius: 4px; border: 1px solid {pill_border};">'
+                    f'{sign}{delta_pct:.0f}% hazard impact'
+                    f'</span>'
+                    f'</div>'
                     f'</div>'
                 )
 
             explain_html = (
-                f'<div class="explain-card">'
-                f'<div class="explain-title">🔍 Attribution Analysis: Key Drivers Influencing This Prediction</div>'
+                f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 18px; margin-top: 18px;">'
+                f'<div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #334155; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">'
+                f'🔍 Attribution Analysis: Key Drivers Influencing This Prediction'
+                f'</div>'
                 f'{"".join(factor_rows)}'
                 f'</div>'
             )
