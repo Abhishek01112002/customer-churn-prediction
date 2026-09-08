@@ -1051,7 +1051,9 @@ with st.sidebar:
             else:
                 st.caption("🟡 **Gateway Warning**: Non-200 response")
         except Exception:
-            st.caption("🔴 **Gateway Offline**: Switched to fallback local engine")
+            st.caption("🔴 **Gateway Offline**: Auto-routed to in-process engine")
+            if "localhost" in api_url or "127.0.0.1" in api_url:
+                st.caption("💡 *Tip: On Streamlit Cloud, localhost points to the cloud container, not your laptop. The app automatically executes using the local in-process model.*")
 
     # Bottom Telemetry Specs
     st.markdown(
@@ -1326,16 +1328,24 @@ if active_nav == "Single Assessment":
                 t_start = time.time()
                 try:
                     if mode == "REST API Microservice (FastAPI)":
-                        res = requests.post(f"{api_url}/predict", json=customer_payload, timeout=5)
-                        if res.status_code == 200:
-                            pred_res = res.json()
-                        else:
-                            st.warning(f"FastAPI error ({res.status_code}). Executing in-process model fallback.")
+                        try:
+                            res = requests.post(f"{api_url}/predict", json=customer_payload, timeout=3)
+                            if res.status_code == 200:
+                                pred_res = res.json()
+                                pred_res['engine_source'] = "FastAPI Microservice Gateway"
+                            else:
+                                st.warning(f"⚠️ FastAPI Gateway returned HTTP {res.status_code}. Seamlessly evaluated using in-process model.")
+                                pred_res = predict_single_customer(customer_payload, local_pipeline)
+                                pred_res['engine_source'] = "In-Process Engine (HTTP Fallback)"
+                        except Exception:
+                            st.info(f"ℹ️ FastAPI backend at `{api_url}` is unreachable. Seamlessly evaluated using in-process production model.")
                             pred_res = predict_single_customer(customer_payload, local_pipeline)
+                            pred_res['engine_source'] = "In-Process Engine (Gateway Offline Fallback)"
                     else:
                         pred_res = predict_single_customer(customer_payload, local_pipeline)
+                        pred_res['engine_source'] = "In-Process Engine"
                     
-                    pred_res['latency_ms'] = int((time.time() - t_start) * 1000)
+                    pred_res['latency_ms'] = max(1, int((time.time() - t_start) * 1000))
                     st.session_state['last_prediction'] = pred_res
                     st.session_state['last_payload'] = customer_payload
                 except Exception as e:
@@ -1375,7 +1385,7 @@ if active_nav == "Single Assessment":
                             <div>
                                 <span class="risk-status-badge {level_class}">{status_label}</span>
                                 <div style="font-size: 0.8rem; color: #64748B; margin-top: 0.35rem;">
-                                    Calibrated Churn Probability • Latency: {latency}ms
+                                    Calibrated Churn Probability • Engine: {pred_res.get('engine_source', 'In-Process Engine')} • Latency: {latency}ms
                                 </div>
                             </div>
                         </div>
