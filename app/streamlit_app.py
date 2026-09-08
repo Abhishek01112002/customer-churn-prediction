@@ -1161,125 +1161,112 @@ if active_nav == "Single Assessment":
 
     with col_sec1:
         # SECTION 1: DEMOGRAPHICS
-        st.markdown(
-            """
-            <div class="form-section-card">
-                <div class="form-section-header">
-                    <span class="form-section-title">👤 1. Demographics & Household</span>
-                    <span class="form-section-badge">4 Attributes</span>
-                </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        c1, c2 = st.columns(2)
-        with c1:
-            gender = st.selectbox("Gender", ["Female", "Male"], index=0)
-            partner = st.selectbox("Partner Present", ["Yes", "No"], index=0)
-        with c2:
-            senior_citizen_val = st.selectbox("Senior Citizen (Age ≥ 65)", ["No", "Yes"], index=0)
-            senior_citizen = 1 if senior_citizen_val == "Yes" else 0
-            dependents = st.selectbox("Dependents Present", ["No", "Yes"], index=0)
-        st.markdown("</div>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown(
+                '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #F1F5F9;">'
+                '<span style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #1E293B;">👤 1. Demographics & Household</span>'
+                '<span style="font-size: 0.68rem; font-weight: 600; color: #64748B; background: #F1F5F9; padding: 2px 8px; border-radius: 4px;">4 Attributes</span>'
+                '</div>',
+                unsafe_allow_html=True,
+            )
+            c1, c2 = st.columns(2)
+            with c1:
+                gender = st.selectbox("Gender", ["Female", "Male"], index=0)
+                partner = st.selectbox("Partner Present", ["Yes", "No"], index=0)
+            with c2:
+                senior_citizen_val = st.selectbox("Senior Citizen (Age ≥ 65)", ["No", "Yes"], index=0)
+                senior_citizen = 1 if senior_citizen_val == "Yes" else 0
+                dependents = st.selectbox("Dependents Present", ["No", "Yes"], index=0)
 
         st.write("")
 
         # SECTION 2: CORE SERVICES
-        st.markdown(
-            """
-            <div class="form-section-card">
-                <div class="form-section-header">
-                    <span class="form-section-title">📞 2. Telecommunications Services</span>
-                    <span class="form-section-badge">Cascading Logic</span>
-                </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        c3, c4 = st.columns(2)
-        with c3:
-            phone_service = st.selectbox("Phone Service", ["Yes", "No"], index=0)
-            if phone_service == "Yes":
-                multiple_lines = st.selectbox("Multiple Lines", ["No", "Yes"], index=0)
-            else:
-                multiple_lines = "No phone service"
-                st.caption("🔒 *Multiple Lines automatically locked to 'No phone service'*")
-        with c4:
-            internet_service = st.selectbox("Internet Service Provider", ["Fiber optic", "DSL", "No"], index=0)
-            st.caption("Fiber optic correlates with higher average tariffs.")
-        st.markdown("</div>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown(
+                '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #F1F5F9;">'
+                '<span style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #1E293B;">📞 2. Telecommunications Services</span>'
+                '<span style="font-size: 0.68rem; font-weight: 600; color: #64748B; background: #F1F5F9; padding: 2px 8px; border-radius: 4px;">Cascading Logic</span>'
+                '</div>',
+                unsafe_allow_html=True,
+            )
+            c3, c4 = st.columns(2)
+            with c3:
+                phone_service = st.selectbox("Phone Service", ["Yes", "No"], index=0)
+                if phone_service == "Yes":
+                    multiple_lines = st.selectbox("Multiple Lines", ["No", "Yes"], index=0)
+                else:
+                    multiple_lines = "No phone service"
+                    st.caption("🔒 *Multiple Lines locked to 'No phone service'*")
+            with c4:
+                internet_service = st.selectbox("Internet Service Provider", ["Fiber optic", "DSL", "No"], index=0)
+                st.caption("Fiber optic correlates with higher average tariffs.")
 
     with col_sec2:
         # SECTION 3: ACCOUNT & BILLING
-        st.markdown(
-            """
-            <div class="form-section-card">
-                <div class="form-section-header">
-                    <span class="form-section-title">💳 3. Account & Billing Terms</span>
-                    <span class="form-section-badge">Financial Signals</span>
-                </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        
-        # Smart Tenure Slider with Lifecycle Stage context
-        tenure = st.slider("Tenure Duration (Months)", min_value=0, max_value=72, value=12)
-        years = tenure / 12.0
-        if tenure <= 12:
-            stage_pill = f'<div style="margin-top: 4px; display: flex; align-items: center; gap: 8px;"><span style="font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; color: #0F172A; background-color: #E2E8F0; padding: 3px 8px; border-radius: 4px;">{tenure} Months</span><span class="context-pill new">🐣 New Customer ({years:.1f} yrs) • Critical Onboarding</span></div>'
-        elif tenure <= 36:
-            stage_pill = f'<div style="margin-top: 4px; display: flex; align-items: center; gap: 8px;"><span style="font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; color: #0F172A; background-color: #E2E8F0; padding: 3px 8px; border-radius: 4px;">{tenure} Months</span><span class="context-pill est">📈 Established Account ({years:.1f} yrs) • Growth Stage</span></div>'
-        else:
-            stage_pill = f'<div style="margin-top: 4px; display: flex; align-items: center; gap: 8px;"><span style="font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; color: #0F172A; background-color: #E2E8F0; padding: 3px 8px; border-radius: 4px;">{tenure} Months</span><span class="context-pill loyal">🛡️ Mature Loyalty ({years:.1f} yrs) • Long-Term Base</span></div>'
-        st.markdown(stage_pill, unsafe_allow_html=True)
-
-        c5, c6 = st.columns(2)
-        with c5:
-            contract = st.selectbox("Contract Terms", ["Month-to-month", "One year", "Two year"], index=0)
-            paperless_billing = st.selectbox("Paperless Billing", ["Yes", "No"], index=0)
-            payment_method = st.selectbox(
-                "Payment Method",
-                [
-                    "Electronic check",
-                    "Mailed check",
-                    "Bank transfer (automatic)",
-                    "Credit card (automatic)",
-                ],
-                index=0,
+        with st.container(border=True):
+            st.markdown(
+                '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #F1F5F9;">'
+                '<span style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #1E293B;">💳 3. Account & Billing Terms</span>'
+                '<span style="font-size: 0.68rem; font-weight: 600; color: #64748B; background: #F1F5F9; padding: 2px 8px; border-radius: 4px;">Financial Signals</span>'
+                '</div>',
+                unsafe_allow_html=True,
             )
-        with c6:
-            monthly_charges = st.number_input("Monthly Charges ($)", min_value=18.0, max_value=125.0, value=75.50, step=0.50)
-            # Smart default suggestion for total charges based on tenure
-            suggested_total = max(monthly_charges, float(tenure * monthly_charges))
-            total_charges = st.number_input("Total Charges ($)", min_value=18.0, max_value=9000.0, value=float(suggested_total), step=10.0)
-        st.markdown("</div>", unsafe_allow_html=True)
+            
+            # Smart Tenure Slider with Lifecycle Stage context
+            tenure = st.slider("Tenure Duration (Months)", min_value=0, max_value=72, value=12)
+            years = tenure / 12.0
+            if tenure <= 12:
+                stage_pill = f'<div style="margin-top: 4px; display: flex; align-items: center; gap: 8px;"><span style="font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; color: #0F172A; background-color: #E2E8F0; padding: 3px 8px; border-radius: 4px;">{tenure} Months</span><span class="context-pill new">🐣 New Customer ({years:.1f} yrs) • Critical Onboarding</span></div>'
+            elif tenure <= 36:
+                stage_pill = f'<div style="margin-top: 4px; display: flex; align-items: center; gap: 8px;"><span style="font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; color: #0F172A; background-color: #E2E8F0; padding: 3px 8px; border-radius: 4px;">{tenure} Months</span><span class="context-pill est">📈 Established Account ({years:.1f} yrs) • Growth Stage</span></div>'
+            else:
+                stage_pill = f'<div style="margin-top: 4px; display: flex; align-items: center; gap: 8px;"><span style="font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; color: #0F172A; background-color: #E2E8F0; padding: 3px 8px; border-radius: 4px;">{tenure} Months</span><span class="context-pill loyal">🛡️ Mature Loyalty ({years:.1f} yrs) • Long-Term Base</span></div>'
+            st.markdown(stage_pill, unsafe_allow_html=True)
+
+            c5, c6 = st.columns(2)
+            with c5:
+                contract = st.selectbox("Contract Terms", ["Month-to-month", "One year", "Two year"], index=0)
+                paperless_billing = st.selectbox("Paperless Billing", ["Yes", "No"], index=0)
+                payment_method = st.selectbox(
+                    "Payment Method",
+                    [
+                        "Electronic check",
+                        "Mailed check",
+                        "Bank transfer (automatic)",
+                        "Credit card (automatic)",
+                    ],
+                    index=0,
+                )
+            with c6:
+                monthly_charges = st.number_input("Monthly Charges ($)", min_value=18.0, max_value=125.0, value=75.50, step=0.50)
+                suggested_total = max(monthly_charges, float(tenure * monthly_charges))
+                total_charges = st.number_input("Total Charges ($)", min_value=18.0, max_value=9000.0, value=float(suggested_total), step=10.0)
 
         st.write("")
 
         # SECTION 4: VALUE-ADDED SERVICES
-        st.markdown(
-            """
-            <div class="form-section-card">
-                <div class="form-section-header">
-                    <span class="form-section-title">🛡️ 4. Value-Added Digital Add-ons</span>
-                    <span class="form-section-badge">Stickiness Drivers</span>
-                </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        if internet_service != "No":
-            c7, c8, c9 = st.columns(3)
-            with c7:
-                online_security = st.selectbox("Online Security", ["No", "Yes"], index=0)
-                tech_support = st.selectbox("Tech Support", ["No", "Yes"], index=0)
-            with c8:
-                online_backup = st.selectbox("Online Backup", ["No", "Yes"], index=0)
-                device_protection = st.selectbox("Device Protection", ["No", "Yes"], index=0)
-            with c9:
-                streaming_tv = st.selectbox("Streaming TV", ["No", "Yes"], index=0)
-                streaming_movies = st.selectbox("Streaming Movies", ["No", "Yes"], index=0)
-        else:
-            online_security = online_backup = device_protection = tech_support = streaming_tv = streaming_movies = "No internet service"
-            st.info("ℹ️ Account has no internet service. All digital add-ons are automatically assigned to 'No internet service'.")
-        st.markdown("</div>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown(
+                '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #F1F5F9;">'
+                '<span style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #1E293B;">🛡️ 4. Value-Added Digital Add-ons</span>'
+                '<span style="font-size: 0.68rem; font-weight: 600; color: #64748B; background: #F1F5F9; padding: 2px 8px; border-radius: 4px;">Stickiness Drivers</span>'
+                '</div>',
+                unsafe_allow_html=True,
+            )
+            if internet_service != "No":
+                c7, c8, c9 = st.columns(3)
+                with c7:
+                    online_security = st.selectbox("Online Security", ["No", "Yes"], index=0)
+                    tech_support = st.selectbox("Tech Support", ["No", "Yes"], index=0)
+                with c8:
+                    online_backup = st.selectbox("Online Backup", ["No", "Yes"], index=0)
+                    device_protection = st.selectbox("Device Protection", ["No", "Yes"], index=0)
+                with c9:
+                    streaming_tv = st.selectbox("Streaming TV", ["No", "Yes"], index=0)
+                    streaming_movies = st.selectbox("Streaming Movies", ["No", "Yes"], index=0)
+            else:
+                online_security = online_backup = device_protection = tech_support = streaming_tv = streaming_movies = "No internet service"
+                st.info("ℹ️ Account has no internet service. All digital add-ons are automatically assigned to 'No internet service'.")
 
     # Assemble payload
     customer_payload = {
@@ -1375,73 +1362,60 @@ if active_nav == "Single Assessment":
                 status_label = "✅ LOW RISK • STABLE ACCOUNT"
                 sub_text = "Account displays strong retention signals (<40%). Excellent candidate for cross-selling."
 
-            # Render Premium Decision Support Panel
-            st.markdown(
-                f"""
-                <div class="result-panel">
-                    <div class="result-header">
-                        <div class="result-header-left">
-                            <span class="score-giant {level_class}">{pct:.1f}%</span>
-                            <div>
-                                <span class="risk-status-badge {level_class}">{status_label}</span>
-                                <div style="font-size: 0.8rem; color: #64748B; margin-top: 0.35rem;">
-                                    Calibrated Churn Probability • Engine: {pred_res.get('engine_source', 'In-Process Engine')} • Latency: {latency}ms
-                                </div>
-                            </div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #64748B;">Decision Boundary</div>
-                            <div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; color: #0F172A;">Threshold: 0.500</div>
-                        </div>
-                    </div>
-
-                    <!-- Modern Horizontal Risk Meter -->
-                    <div class="risk-meter-container">
-                        <div class="risk-meter-labels">
-                            <span>0% Safe</span>
-                            <span>40% Moderate</span>
-                            <span>70% High Risk</span>
-                            <span>100% Critical</span>
-                        </div>
-                        <div class="risk-meter-track">
-                            <div class="risk-meter-pin" style="left: {min(max(pct, 2.0), 98.0)}%;"></div>
-                        </div>
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
+            # Render Premium Decision Support Panel (Clean unindented HTML to prevent Markdown code-block parsing)
+            pin_left = min(max(pct, 2.0), 98.0)
+            panel_html = (
+                f'<div class="result-panel">'
+                f'<div class="result-header">'
+                f'<div class="result-header-left">'
+                f'<span class="score-giant {level_class}">{pct:.1f}%</span>'
+                f'<div>'
+                f'<span class="risk-status-badge {level_class}">{status_label}</span>'
+                f'<div style="font-size: 0.8rem; color: #64748B; margin-top: 0.35rem;">'
+                f'Calibrated Churn Probability • Engine: {pred_res.get("engine_source", "In-Process Engine")} • Latency: {latency}ms'
+                f'</div>'
+                f'</div>'
+                f'</div>'
+                f'<div style="text-align: right;">'
+                f'<div style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #64748B;">Decision Boundary</div>'
+                f'<div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; color: #0F172A;">Threshold: 0.500</div>'
+                f'</div>'
+                f'</div>'
+                f'<div class="risk-meter-container">'
+                f'<div class="risk-meter-labels">'
+                f'<span>0% Safe</span><span>40% Moderate</span><span>70% High Risk</span><span>100% Critical</span>'
+                f'</div>'
+                f'<div class="risk-meter-track">'
+                f'<div class="risk-meter-pin" style="left: {pin_left:.1f}%;"></div>'
+                f'</div>'
+                f'</div>'
+                f'</div>'
             )
+            st.markdown(panel_html, unsafe_allow_html=True)
 
             # EXPLAINABILITY: Why is this customer at risk?
             risk_factors = compute_customer_risk_factors(payload, proba)
-            st.markdown(
-                """
-                <div class="explain-card">
-                    <div class="explain-title">🔍 Attribution Analysis: Key Drivers Influencing This Prediction</div>
-                """,
-                unsafe_allow_html=True,
-            )
-
+            factor_rows = []
             for item in risk_factors:
                 delta_pct = item['delta'] * 100
                 sign = "+" if item['delta'] > 0 else ""
                 delta_class = "pos" if item['delta'] > 0 else "neg"
                 icon = "🔺" if item['delta'] > 0 else "🛡️"
-                st.markdown(
-                    f"""
-                    <div class="factor-row">
-                        <div>
-                            <div class="factor-name">{icon} {item['factor']}</div>
-                            <div class="factor-detail">{item['detail']}</div>
-                        </div>
-                        <div class="factor-delta-bar-container">
-                            <span class="factor-delta {delta_class}">{sign}{delta_pct:.0f}% hazard impact</span>
-                        </div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
+                factor_rows.append(
+                    f'<div class="factor-row">'
+                    f'<div><div class="factor-name">{icon} {item["factor"]}</div>'
+                    f'<div class="factor-detail">{item["detail"]}</div></div>'
+                    f'<div class="factor-delta-bar-container"><span class="factor-delta {delta_class}">{sign}{delta_pct:.0f}% hazard impact</span></div>'
+                    f'</div>'
                 )
-            st.markdown("</div>", unsafe_allow_html=True)
+
+            explain_html = (
+                f'<div class="explain-card">'
+                f'<div class="explain-title">🔍 Attribution Analysis: Key Drivers Influencing This Prediction</div>'
+                f'{"".join(factor_rows)}'
+                f'</div>'
+            )
+            st.markdown(explain_html, unsafe_allow_html=True)
 
             # RETENTION PLAYBOOK: Strategic Decision Support
             st.markdown("#### Recommended Retention Playbook")
@@ -1465,16 +1439,10 @@ if active_nav == "Single Assessment":
                     p_title = "Annual Loyalty Recognition"
                     p_body = "Send automated VIP customer appreciation note with anniversary account milestone bonus."
 
-                st.markdown(
-                    f"""
-                    <div class="playbook-card">
-                        <span class="playbook-priority {p_pri}">{p_pri_text}</span>
-                        <div class="playbook-title">{p_title}</div>
-                        <div class="playbook-desc">{p_body}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
+                with st.container(border=True):
+                    st.markdown(f'<span class="playbook-priority {p_pri}">{p_pri_text}</span>', unsafe_allow_html=True)
+                    st.markdown(f"**{p_title}**")
+                    st.caption(p_body)
 
             with p2:
                 if online_security == "No" or tech_support == "No":
@@ -1488,16 +1456,10 @@ if active_nav == "Single Assessment":
                     p2_title = "Streaming Package Cross-Sell"
                     p2_body = "Account is stable; present bundled entertainment streaming packages to deepen multi-product stickiness."
 
-                st.markdown(
-                    f"""
-                    <div class="playbook-card">
-                        <span class="playbook-priority {p2_pri}">{p2_pri_text}</span>
-                        <div class="playbook-title">{p2_title}</div>
-                        <div class="playbook-desc">{p2_body}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
+                with st.container(border=True):
+                    st.markdown(f'<span class="playbook-priority {p2_pri}">{p2_pri_text}</span>', unsafe_allow_html=True)
+                    st.markdown(f"**{p2_title}**")
+                    st.caption(p2_body)
 
             with p3:
                 if "electronic check" in payment_method.lower():
@@ -1511,16 +1473,10 @@ if active_nav == "Single Assessment":
                     p3_title = "Account Health Tracking"
                     p3_body = "Enroll in quarterly automated account health telemetry; maintain continuous low-touch surveillance."
 
-                st.markdown(
-                    f"""
-                    <div class="playbook-card">
-                        <span class="playbook-priority {p3_pri}">{p3_pri_text}</span>
-                        <div class="playbook-title">{p3_title}</div>
-                        <div class="playbook-desc">{p3_body}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
+                with st.container(border=True):
+                    st.markdown(f'<span class="playbook-priority {p3_pri}">{p3_pri_text}</span>', unsafe_allow_html=True)
+                    st.markdown(f"**{p3_title}**")
+                    st.caption(p3_body)
 
 # ══════════════════════════════════════════════════════════════════════
 #  VIEW 2: BATCH PORTFOLIO ANALYTICS
