@@ -419,16 +419,132 @@ st.markdown(
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
     }
 
-    /* ─── File Uploader ─── */
-    [data-testid="stFileUploader"] section {
-        background-color: var(--white) !important;
-        border: 1.5px dashed var(--slate-300) !important;
-        border-radius: 8px !important;
-        padding: 1.5rem !important;
-        transition: border-color 0.15s ease;
+    /* ─── Enterprise File Uploader: Guaranteed High-Contrast Typography ─── */
+    [data-testid="stFileUploader"] {
+        margin-top: 0.5rem !important;
+        margin-bottom: 1rem !important;
     }
-    [data-testid="stFileUploader"] section:hover {
-        border-color: var(--slate-700) !important;
+
+    /* Uploader Label: "Upload Batch CSV File" */
+    [data-testid="stFileUploader"] label,
+    [data-testid="stFileUploader"] label *,
+    [data-testid="stFileUploader"] label p,
+    [data-testid="stFileUploader"] label span,
+    [data-testid="stFileUploader"] [data-testid="stWidgetLabel"],
+    [data-testid="stFileUploader"] [data-testid="stWidgetLabel"] * {
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
+        font-size: 0.95rem !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.01em !important;
+        margin-bottom: 0.45rem !important;
+    }
+
+    /* Dropzone Container Box */
+    [data-testid="stFileUploader"] section,
+    [data-testid="stFileUploaderDropzone"],
+    section[data-testid="stFileUploaderDropzone"] {
+        background-color: #F8FAFC !important;
+        border: 2px dashed #94A3B8 !important;
+        border-radius: 10px !important;
+        padding: 1.75rem 1.5rem !important;
+        transition: all 0.2s ease !important;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+    }
+    [data-testid="stFileUploader"] section:hover,
+    [data-testid="stFileUploaderDropzone"]:hover,
+    section[data-testid="stFileUploaderDropzone"]:hover {
+        background-color: #F1F5F9 !important;
+        border-color: #2563EB !important;
+    }
+
+    /* Text Above / Around Browse Button ("Drag and drop file here", "No file chosen", etc.) */
+    [data-testid="stFileUploader"] section *,
+    [data-testid="stFileUploaderDropzone"] *,
+    [data-testid="stFileUploaderDropzoneInstructions"],
+    [data-testid="stFileUploaderDropzoneInstructions"] *,
+    [data-testid="stFileUploaderDropzoneInstructions"] span,
+    [data-testid="stFileUploaderDropzoneInstructions"] div,
+    [data-testid="stFileUploaderInstructions"],
+    [data-testid="stFileUploaderInstructions"] * {
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
+        font-size: 0.92rem !important;
+        font-weight: 600 !important;
+        opacity: 1 !important;
+    }
+
+    /* Limit & Format Text ("Limit 200MB per file • CSV") */
+    [data-testid="stFileUploader"] section small,
+    [data-testid="stFileUploader"] section small *,
+    [data-testid="stFileUploaderDropzone"] small,
+    [data-testid="stFileUploaderDropzone"] small *,
+    [data-testid="stFileUploaderDropzoneInstructions"] small,
+    [data-testid="stFileUploaderDropzoneInstructions"] small * {
+        color: #475569 !important;
+        -webkit-text-fill-color: #475569 !important;
+        font-size: 0.82rem !important;
+        font-weight: 600 !important;
+        margin-top: 0.35rem !important;
+        display: block !important;
+        opacity: 1 !important;
+    }
+
+    /* Dropzone Upload SVG Icon */
+    [data-testid="stFileUploaderDropzone"] svg,
+    [data-testid="stFileUploader"] section svg {
+        stroke: #2563EB !important;
+        fill: none !important;
+        width: 32px !important;
+        height: 32px !important;
+        margin-bottom: 0.4rem !important;
+    }
+
+    /* Dropzone Button ("Browse files") */
+    [data-testid="stFileUploader"] section button,
+    [data-testid="stFileUploaderDropzone"] button,
+    [data-testid="stFileUploader"] button[data-testid="stBaseButton-secondary"] {
+        background-color: #FFFFFF !important;
+        border: 1.5px solid #CBD5E1 !important;
+        border-radius: 6px !important;
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
+        font-weight: 600 !important;
+        font-size: 0.88rem !important;
+        padding: 0.45rem 1.1rem !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+        transition: all 0.15s ease !important;
+    }
+    [data-testid="stFileUploader"] section button *,
+    [data-testid="stFileUploaderDropzone"] button * {
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
+        font-weight: 600 !important;
+    }
+    [data-testid="stFileUploader"] section button:hover,
+    [data-testid="stFileUploaderDropzone"] button:hover {
+        background-color: #F8FAFC !important;
+        border-color: #2563EB !important;
+        color: #1D4ED8 !important;
+        -webkit-text-fill-color: #1D4ED8 !important;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.15) !important;
+    }
+
+    /* Uploaded File Pill (when a CSV is selected) */
+    [data-testid="stFileUploaderFile"],
+    div[data-testid="stFileUploaderFileData"] {
+        background-color: #FFFFFF !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 6px !important;
+        padding: 0.5rem 0.75rem !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    }
+    [data-testid="stFileUploaderFile"] *,
+    [data-testid="stFileUploaderFileData"] * {
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
     }
 
     /* ─── Hide Streamlit Branding ─── */
