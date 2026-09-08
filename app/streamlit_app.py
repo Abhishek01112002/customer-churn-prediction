@@ -419,19 +419,34 @@ st.markdown(
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
     }
 
-    /* ─── Enterprise File Uploader: Guaranteed High-Contrast Typography ─── */
+    /* ─── Enterprise File Uploader: Clean, High-Contrast & No Text Overlaps ─── */
     [data-testid="stFileUploader"] {
         margin-top: 0.5rem !important;
         margin-bottom: 1rem !important;
     }
 
+    /* STRICT: Completely hide browser native file input to prevent duplicate/overlapping "uploaUpload" buttons */
+    [data-testid="stFileUploader"] input[type="file"],
+    [data-testid="stFileUploaderDropzone"] input[type="file"],
+    section[data-testid="stFileUploaderDropzone"] input[type="file"] {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        position: absolute !important;
+        width: 0 !important;
+        height: 0 !important;
+        pointer-events: none !important;
+    }
+    [data-testid="stFileUploader"] input[type="file"]::-webkit-file-upload-button {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+
     /* Uploader Label: "Upload Batch CSV File" */
-    [data-testid="stFileUploader"] label,
-    [data-testid="stFileUploader"] label *,
-    [data-testid="stFileUploader"] label p,
-    [data-testid="stFileUploader"] label span,
-    [data-testid="stFileUploader"] [data-testid="stWidgetLabel"],
-    [data-testid="stFileUploader"] [data-testid="stWidgetLabel"] * {
+    [data-testid="stFileUploader"] > label,
+    [data-testid="stFileUploader"] [data-testid="stWidgetLabel"] p,
+    [data-testid="stFileUploader"] [data-testid="stWidgetLabel"] span {
         color: #0F172A !important;
         -webkit-text-fill-color: #0F172A !important;
         font-size: 0.95rem !important;
@@ -441,58 +456,39 @@ st.markdown(
     }
 
     /* Dropzone Container Box */
-    [data-testid="stFileUploader"] section,
     [data-testid="stFileUploaderDropzone"],
     section[data-testid="stFileUploaderDropzone"] {
         background-color: #F8FAFC !important;
         border: 2px dashed #94A3B8 !important;
         border-radius: 10px !important;
-        padding: 1.75rem 1.5rem !important;
+        padding: 1.5rem !important;
         transition: all 0.2s ease !important;
         box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03) !important;
     }
-    [data-testid="stFileUploader"] section:hover,
     [data-testid="stFileUploaderDropzone"]:hover,
     section[data-testid="stFileUploaderDropzone"]:hover {
         background-color: #F1F5F9 !important;
         border-color: #2563EB !important;
     }
 
-    /* Text Above / Around Browse Button ("Drag and drop file here", "No file chosen", etc.) */
-    [data-testid="stFileUploader"] section *,
-    [data-testid="stFileUploaderDropzone"] *,
-    [data-testid="stFileUploaderDropzoneInstructions"],
-    [data-testid="stFileUploaderDropzoneInstructions"] *,
-    [data-testid="stFileUploaderDropzoneInstructions"] span,
-    [data-testid="stFileUploaderDropzoneInstructions"] div,
-    [data-testid="stFileUploaderInstructions"],
-    [data-testid="stFileUploaderInstructions"] * {
+    /* Dropzone Text: "Drag and drop file here" */
+    [data-testid="stFileUploaderDropzoneInstructions"] span {
         color: #0F172A !important;
         -webkit-text-fill-color: #0F172A !important;
         font-size: 0.92rem !important;
         font-weight: 600 !important;
-        opacity: 1 !important;
     }
 
-    /* Limit & Format Text ("Limit 200MB per file • CSV") */
-    [data-testid="stFileUploader"] section small,
-    [data-testid="stFileUploader"] section small *,
-    [data-testid="stFileUploaderDropzone"] small,
-    [data-testid="stFileUploaderDropzone"] small *,
-    [data-testid="stFileUploaderDropzoneInstructions"] small,
-    [data-testid="stFileUploaderDropzoneInstructions"] small * {
+    /* Limit & Format Text: "Limit 200MB per file • CSV" */
+    [data-testid="stFileUploaderDropzoneInstructions"] small {
         color: #475569 !important;
         -webkit-text-fill-color: #475569 !important;
         font-size: 0.82rem !important;
         font-weight: 600 !important;
-        margin-top: 0.35rem !important;
-        display: block !important;
-        opacity: 1 !important;
     }
 
     /* Dropzone Upload SVG Icon */
-    [data-testid="stFileUploaderDropzone"] svg,
-    [data-testid="stFileUploader"] section svg {
+    [data-testid="stFileUploaderDropzone"] svg {
         stroke: #2563EB !important;
         fill: none !important;
         width: 32px !important;
@@ -500,10 +496,9 @@ st.markdown(
         margin-bottom: 0.4rem !important;
     }
 
-    /* Dropzone Button ("Browse files") */
-    [data-testid="stFileUploader"] section button,
+    /* Dropzone "Browse files" Button */
     [data-testid="stFileUploaderDropzone"] button,
-    [data-testid="stFileUploader"] button[data-testid="stBaseButton-secondary"] {
+    section[data-testid="stFileUploaderDropzone"] button {
         background-color: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 6px !important;
@@ -515,14 +510,8 @@ st.markdown(
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
         transition: all 0.15s ease !important;
     }
-    [data-testid="stFileUploader"] section button *,
-    [data-testid="stFileUploaderDropzone"] button * {
-        color: #0F172A !important;
-        -webkit-text-fill-color: #0F172A !important;
-        font-weight: 600 !important;
-    }
-    [data-testid="stFileUploader"] section button:hover,
-    [data-testid="stFileUploaderDropzone"] button:hover {
+    [data-testid="stFileUploaderDropzone"] button:hover,
+    section[data-testid="stFileUploaderDropzone"] button:hover {
         background-color: #F8FAFC !important;
         border-color: #2563EB !important;
         color: #1D4ED8 !important;
@@ -531,16 +520,15 @@ st.markdown(
     }
 
     /* Uploaded File Pill (when a CSV is selected) */
-    [data-testid="stFileUploaderFile"],
-    div[data-testid="stFileUploaderFileData"] {
+    [data-testid="stFileUploaderFile"] {
         background-color: #FFFFFF !important;
         border: 1px solid #CBD5E1 !important;
         border-radius: 6px !important;
         padding: 0.5rem 0.75rem !important;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
     }
-    [data-testid="stFileUploaderFile"] *,
-    [data-testid="stFileUploaderFileData"] * {
+    [data-testid="stFileUploaderFile"] span,
+    [data-testid="stFileUploaderFile"] div {
         color: #0F172A !important;
         -webkit-text-fill-color: #0F172A !important;
         font-size: 0.85rem !important;
