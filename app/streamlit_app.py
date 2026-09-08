@@ -42,23 +42,38 @@ st.markdown("""
     }
     .stApp {
         background-color: #F5F5F7 !important;
+        color: #1D1D1F !important;
     }
-    h1, h2, h3 {
+    h1, h2, h3, h4, h5, h6 {
+        color: #1D1D1F !important;
         letter-spacing: -0.025em;
+    }
+    .stApp p, .stApp li, .stApp span, .stApp div {
+        color: #1D1D1F;
+    }
+    .stApp label {
+        color: #3A3A3C !important;
+    }
+    .stApp .stMarkdown p {
+        color: #1D1D1F !important;
+    }
+    [data-testid="stCaptionContainer"] {
+        color: #86868B !important;
     }
 
     /* ─── Sidebar ─── */
     section[data-testid="stSidebar"] {
         background: linear-gradient(180deg, #1C1C1E 0%, #2C2C2E 100%) !important;
     }
-    section[data-testid="stSidebar"] h1,
-    section[data-testid="stSidebar"] h2,
-    section[data-testid="stSidebar"] h3,
-    section[data-testid="stSidebar"] h4,
-    section[data-testid="stSidebar"] p,
-    section[data-testid="stSidebar"] span,
-    section[data-testid="stSidebar"] label,
-    section[data-testid="stSidebar"] li {
+    .stApp section[data-testid="stSidebar"] h1,
+    .stApp section[data-testid="stSidebar"] h2,
+    .stApp section[data-testid="stSidebar"] h3,
+    .stApp section[data-testid="stSidebar"] h4,
+    .stApp section[data-testid="stSidebar"] p,
+    .stApp section[data-testid="stSidebar"] span,
+    .stApp section[data-testid="stSidebar"] div,
+    .stApp section[data-testid="stSidebar"] label,
+    .stApp section[data-testid="stSidebar"] li {
         color: rgba(255,255,255,0.85) !important;
     }
     section[data-testid="stSidebar"] hr {
