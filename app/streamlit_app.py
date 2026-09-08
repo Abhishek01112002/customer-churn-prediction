@@ -22,250 +22,144 @@ st.set_page_config(
 )
 
 # ══════════════════════════════════════════════════════════════════════
-#  APPLE DESIGN SYSTEM — COMPLETE CSS INJECTION
+#  APPLE-INSPIRED DESIGN SYSTEM (Conservative, layout-safe CSS)
 # ══════════════════════════════════════════════════════════════════════
+
+# Load Inter font via link tag (not @import inside style)
+st.markdown(
+    '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">',
+    unsafe_allow_html=True,
+)
+
 st.markdown("""
 <style>
-    /* ─── Google Fonts: Inter ─── */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-    /* ─── Design Tokens ─── */
-    :root {
-        --apple-blue: #007AFF;
-        --apple-blue-hover: #0A84FF;
-        --apple-green: #30D158;
-        --apple-orange: #FF9F0A;
-        --apple-red: #FF453A;
-        --apple-teal: #5AC8FA;
-        --apple-bg: #F5F5F7;
-        --apple-card: rgba(255, 255, 255, 0.72);
-        --apple-card-border: rgba(255, 255, 255, 0.6);
-        --apple-text: #1D1D1F;
-        --apple-text-sec: #6E6E73;
-        --apple-text-ter: #AEAEB2;
-        --apple-divider: rgba(60, 60, 67, 0.08);
-        --font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display',
-                'SF Pro Text', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-        --r-xs: 8px;  --r-sm: 10px;  --r-md: 14px;  --r-lg: 18px;  --r-xl: 22px;
-        --s-sm:  0 2px  8px rgba(0,0,0,.04), 0 1px  2px rgba(0,0,0,.06);
-        --s-md:  0 4px 16px rgba(0,0,0,.06), 0 2px  6px rgba(0,0,0,.04);
-        --s-lg:  0 12px 40px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.04);
-        --ease: all .3s cubic-bezier(.25,.1,.25,1);
-        --ease-f: all .2s cubic-bezier(.25,.1,.25,1);
+    /* ─── Global Typography & Background ─── */
+    html, body, .stApp,
+    h1, h2, h3, h4, h5, h6,
+    p, li, span, label, div, input, textarea, select, button {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont,
+                     'SF Pro Display', 'Segoe UI', 'Helvetica Neue', sans-serif !important;
     }
-
-    /* ═══════════ GLOBAL ═══════════ */
-    html, body, .stApp {
-        font-family: var(--font) !important;
-        background-color: var(--apple-bg) !important;
-        color: var(--apple-text);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+    .stApp {
+        background-color: #F5F5F7 !important;
     }
-    h1,h2,h3,h4,h5,h6 {
-        font-family: var(--font) !important;
-        color: var(--apple-text) !important;
+    h1, h2, h3 {
         letter-spacing: -0.025em;
     }
-    p, li, span, label, div {
-        font-family: var(--font) !important;
-    }
-    hr {
-        border: none !important;
-        border-top: 1px solid var(--apple-divider) !important;
-        margin: 1.5rem 0 !important;
-    }
 
-    /* ═══════════ SIDEBAR (Dark Glass) ═══════════ */
+    /* ─── Sidebar ─── */
     section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #1C1C1E 0%, #2C2C2E 50%, #1C1C1E 100%) !important;
-        border-right: 1px solid rgba(255,255,255,0.06) !important;
-    }
-    section[data-testid="stSidebar"] * {
-        color: rgba(255,255,255,0.85) !important;
+        background: linear-gradient(180deg, #1C1C1E 0%, #2C2C2E 100%) !important;
     }
     section[data-testid="stSidebar"] h1,
     section[data-testid="stSidebar"] h2,
-    section[data-testid="stSidebar"] h3 {
-        color: rgba(255,255,255,0.95) !important;
-    }
-    section[data-testid="stSidebar"] .stSelectbox label,
-    section[data-testid="stSidebar"] .stTextInput label {
-        color: rgba(255,255,255,0.5) !important;
-        font-size: 0.75rem !important;
-        font-weight: 600 !important;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-    }
-    section[data-testid="stSidebar"] .stSelectbox > div > div {
-        background: rgba(255,255,255,0.07) !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        border-radius: var(--r-sm) !important;
-        color: white !important;
-    }
-    section[data-testid="stSidebar"] .stTextInput > div > div > input {
-        background: rgba(255,255,255,0.07) !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        border-radius: var(--r-sm) !important;
-        color: white !important;
+    section[data-testid="stSidebar"] h3,
+    section[data-testid="stSidebar"] h4,
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] span,
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] li {
+        color: rgba(255,255,255,0.85) !important;
     }
     section[data-testid="stSidebar"] hr {
         border-color: rgba(255,255,255,0.08) !important;
     }
-    section[data-testid="stSidebar"] .stAlert > div {
-        background: rgba(255,255,255,0.06) !important;
-        border-radius: var(--r-sm) !important;
-        border: 1px solid rgba(255,255,255,0.08) !important;
+    section[data-testid="stSidebar"] .stSelectbox > div > div {
+        background: rgba(255,255,255,0.07) !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        border-radius: 10px !important;
+    }
+    section[data-testid="stSidebar"] .stSelectbox > div > div span {
+        color: rgba(255,255,255,0.9) !important;
+    }
+    section[data-testid="stSidebar"] .stTextInput > div > div > input {
+        background: rgba(255,255,255,0.07) !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        border-radius: 10px !important;
+        color: white !important;
     }
 
-    /* ═══════════ TABS → iOS SEGMENTED CONTROL ═══════════ */
-    .stTabs [data-baseweb="tab-list"] {
-        background: rgba(142,142,147,0.12);
-        border-radius: 12px;
-        padding: 4px;
-        gap: 2px !important;
-        border-bottom: none !important;
-    }
-    .stTabs [data-baseweb="tab"] {
-        border-radius: 9px !important;
-        padding: 9px 24px !important;
-        font-weight: 500 !important;
-        font-size: 14px !important;
-        color: var(--apple-text-sec) !important;
-        border-bottom: none !important;
-        background: transparent !important;
-        transition: var(--ease-f);
-        white-space: nowrap;
-    }
-    .stTabs [data-baseweb="tab"][aria-selected="true"] {
-        background: #FFFFFF !important;
-        color: var(--apple-text) !important;
-        font-weight: 600 !important;
-        box-shadow: 0 1px 5px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
-    }
-    .stTabs [data-baseweb="tab-highlight"],
-    .stTabs [data-baseweb="tab-border"] {
-        display: none !important;
-    }
-
-    /* ═══════════ PRIMARY BUTTONS (iOS) ═══════════ */
-    .stButton > button[kind="primary"],
-    .stButton > button[data-testid="stBaseButton-primary"] {
+    /* ─── Primary Buttons ─── */
+    button[kind="primary"],
+    button[data-testid="stBaseButton-primary"] {
         background: linear-gradient(180deg, #007AFF 0%, #0063D1 100%) !important;
         color: white !important;
         border: none !important;
-        border-radius: var(--r-md) !important;
-        padding: 12px 32px !important;
+        border-radius: 14px !important;
         font-weight: 600 !important;
         font-size: 15px !important;
-        letter-spacing: -0.01em;
-        box-shadow: 0 4px 14px rgba(0,122,255,0.25) !important;
-        transition: var(--ease);
+        padding: 0.6rem 1.5rem !important;
+        box-shadow: 0 4px 14px rgba(0,122,255,0.2);
+        transition: all 0.2s ease;
     }
-    .stButton > button[kind="primary"]:hover,
-    .stButton > button[data-testid="stBaseButton-primary"]:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 6px 22px rgba(0,122,255,0.35) !important;
-        background: linear-gradient(180deg, #0A84FF 0%, #007AFF 100%) !important;
-    }
-    .stButton > button[kind="primary"]:active,
-    .stButton > button[data-testid="stBaseButton-primary"]:active {
-        transform: translateY(0px);
-        box-shadow: 0 2px 8px rgba(0,122,255,0.2) !important;
+    button[kind="primary"]:hover,
+    button[data-testid="stBaseButton-primary"]:hover {
+        box-shadow: 0 6px 20px rgba(0,122,255,0.3) !important;
+        opacity: 0.95;
     }
 
-    /* ═══════════ DOWNLOAD & SECONDARY BUTTONS ═══════════ */
+    /* ─── Download Buttons ─── */
     .stDownloadButton > button {
         background: rgba(0,122,255,0.06) !important;
-        color: var(--apple-blue) !important;
+        color: #007AFF !important;
         border: 1.5px solid rgba(0,122,255,0.18) !important;
-        border-radius: var(--r-md) !important;
+        border-radius: 12px !important;
         font-weight: 600 !important;
-        font-size: 14px !important;
-        padding: 10px 24px !important;
-        transition: var(--ease);
     }
     .stDownloadButton > button:hover {
-        background: rgba(0,122,255,0.12) !important;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0,122,255,0.12) !important;
+        background: rgba(0,122,255,0.1) !important;
     }
 
-    /* ═══════════ FORM INPUTS ═══════════ */
-    .stSelectbox > div > div,
-    .stMultiSelect > div > div {
-        border-radius: var(--r-sm) !important;
-        border: 1.5px solid rgba(60,60,67,0.12) !important;
-        transition: var(--ease-f);
-        font-size: 14px !important;
-    }
-    .stSelectbox > div > div:focus-within,
-    .stMultiSelect > div > div:focus-within {
-        border-color: var(--apple-blue) !important;
-        box-shadow: 0 0 0 3px rgba(0,122,255,0.1) !important;
+    /* ─── Form Inputs (light touch) ─── */
+    .stSelectbox > div > div {
+        border-radius: 10px !important;
     }
     .stNumberInput > div > div > input {
-        border-radius: var(--r-sm) !important;
-        border: 1.5px solid rgba(60,60,67,0.12) !important;
-        transition: var(--ease-f);
-    }
-    .stNumberInput > div > div > input:focus {
-        border-color: var(--apple-blue) !important;
-        box-shadow: 0 0 0 3px rgba(0,122,255,0.1) !important;
+        border-radius: 10px !important;
     }
     .stSlider > div > div > div > div {
-        background-color: var(--apple-blue) !important;
-    }
-    .stSlider [data-testid="stThumbValue"] {
-        font-weight: 600 !important;
-        color: var(--apple-blue) !important;
+        background-color: #007AFF !important;
     }
 
-    /* ═══════════ FILE UPLOADER ═══════════ */
-    [data-testid="stFileUploader"] section {
-        border-radius: var(--r-lg) !important;
-        border: 2px dashed rgba(0,122,255,0.2) !important;
-        background: rgba(0,122,255,0.02) !important;
-        padding: 2rem !important;
-        transition: var(--ease);
-    }
-    [data-testid="stFileUploader"] section:hover {
-        border-color: rgba(0,122,255,0.4) !important;
-        background: rgba(0,122,255,0.04) !important;
-    }
-
-    /* ═══════════ PROGRESS BAR ═══════════ */
-    .stProgress > div > div > div {
-        border-radius: 10px !important;
-        background: rgba(142,142,147,0.1) !important;
-        height: 8px !important;
-    }
+    /* ─── Progress Bar ─── */
     .stProgress > div > div > div > div {
         background: linear-gradient(90deg, #007AFF, #5AC8FA) !important;
-        border-radius: 10px !important;
+        border-radius: 8px !important;
+    }
+    .stProgress > div > div > div {
+        border-radius: 8px !important;
     }
 
-    /* ═══════════ ST METRICS (Glass) ═══════════ */
-    [data-testid="stMetric"] {
-        background: var(--apple-card);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid var(--apple-card-border);
-        border-radius: var(--r-lg);
-        padding: 1.2rem 1rem;
-        box-shadow: var(--s-sm);
-        transition: var(--ease);
+    /* ─── Alerts ─── */
+    .stAlert > div {
+        border-radius: 12px !important;
     }
-    [data-testid="stMetric"]:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--s-md);
+
+    /* ─── Data Tables ─── */
+    [data-testid="stDataFrame"] {
+        border-radius: 12px !important;
+        overflow: hidden;
+    }
+
+    /* ─── Images ─── */
+    .stImage img {
+        border-radius: 12px;
+    }
+
+    /* ─── st.metric glass effect ─── */
+    [data-testid="stMetric"] {
+        background: white;
+        border: 1px solid rgba(0,0,0,0.04);
+        border-radius: 16px;
+        padding: 1rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     [data-testid="stMetricLabel"] {
         font-size: 0.72rem !important;
         font-weight: 600 !important;
         text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: var(--apple-text-sec) !important;
+        letter-spacing: 0.05em;
+        color: #86868B !important;
     }
     [data-testid="stMetricValue"] {
         font-size: 1.5rem !important;
@@ -273,167 +167,127 @@ st.markdown("""
         letter-spacing: -0.02em;
     }
 
-    /* ═══════════ DATAFRAME ═══════════ */
-    [data-testid="stDataFrame"] {
-        border-radius: var(--r-md) !important;
-        overflow: hidden;
-        box-shadow: var(--s-sm);
-        border: 1px solid var(--apple-divider) !important;
-    }
+    /* ─── Hide default branding ─── */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
 
-    /* ═══════════ ALERTS ═══════════ */
-    .stAlert > div {
-        border-radius: var(--r-md) !important;
-        font-weight: 500;
-        font-size: 14px;
-    }
+    /* ══════════ CUSTOM COMPONENT CLASSES ══════════ */
 
-    /* ═══════════ IMAGES ═══════════ */
-    .stImage img {
-        border-radius: var(--r-md);
-        box-shadow: var(--s-sm);
-    }
-
-    /* ══════════════════════════════════════════════════════════════
-       CUSTOM COMPONENT CLASSES
-    ══════════════════════════════════════════════════════════════ */
-
-    /* Hero Header */
+    /* Hero header */
     .apple-hero {
         text-align: center;
-        padding: 1rem 0 0.5rem;
+        padding: 1.5rem 1rem 0.75rem;
     }
-    .apple-hero h1 {
-        font-size: 2.6rem !important;
-        font-weight: 700 !important;
-        letter-spacing: -0.04em !important;
-        line-height: 1.1 !important;
-        margin-bottom: 0.5rem !important;
-        background: linear-gradient(135deg, #1D1D1F 0%, #515154 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+    .apple-hero-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        line-height: 1.15;
+        color: #1D1D1F;
+        margin-bottom: 0.5rem;
     }
-    .apple-hero .hero-sub {
-        font-size: 1.08rem;
-        color: var(--apple-text-sec);
+    .apple-hero-sub {
+        font-size: 1.05rem;
+        color: #86868B;
         font-weight: 400;
-        max-width: 620px;
+        max-width: 600px;
         margin: 0 auto;
         line-height: 1.6;
     }
 
-    /* Glass Metric Cards */
+    /* Glass metric cards */
     .glass-metric {
-        background: var(--apple-card);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid var(--apple-card-border);
-        border-radius: var(--r-lg);
-        padding: 1.2rem 1.4rem;
-        box-shadow: var(--s-sm);
+        background: white;
+        border: 1px solid rgba(0,0,0,0.05);
+        border-radius: 18px;
+        padding: 1.25rem 1rem;
         text-align: center;
-        transition: var(--ease);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
     .glass-metric:hover {
         transform: translateY(-3px);
-        box-shadow: var(--s-lg);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
     }
-    .glass-metric .gm-icon {
-        font-size: 1.5rem;
-        margin-bottom: 0.35rem;
-    }
+    .glass-metric .gm-icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
     .glass-metric .gm-value {
         font-size: 2rem;
         font-weight: 700;
-        color: var(--apple-text);
+        color: #1D1D1F;
         letter-spacing: -0.03em;
         line-height: 1.2;
     }
     .glass-metric .gm-label {
-        font-size: 0.7rem;
-        color: var(--apple-text-sec);
+        font-size: 0.68rem;
+        color: #86868B;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.07em;
-        margin-top: 0.3rem;
+        margin-top: 0.25rem;
     }
 
-    /* Strategy Card */
+    /* Retention strategy card */
     .strategy-card {
         background: linear-gradient(135deg, rgba(0,122,255,0.04) 0%, rgba(90,200,250,0.02) 100%);
         border: 1px solid rgba(0,122,255,0.1);
-        border-radius: var(--r-lg);
-        padding: 1.5rem 2rem;
+        border-radius: 16px;
+        padding: 1.5rem 1.75rem;
         margin-top: 1rem;
     }
     .strategy-card h4 {
-        color: var(--apple-blue) !important;
+        color: #007AFF !important;
         font-weight: 600 !important;
-        font-size: 1.05rem !important;
-        margin-bottom: 0.5rem !important;
-    }
-    .strategy-card li {
-        color: var(--apple-text-sec) !important;
-        font-size: 0.92rem;
-        line-height: 1.7;
-    }
-    .strategy-card strong {
-        color: var(--apple-text) !important;
     }
 
-    /* Section Pill */
+    /* Section pill label */
     .section-pill {
         display: inline-block;
         font-size: 0.68rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--apple-blue);
+        color: #007AFF;
         background: rgba(0,122,255,0.08);
         padding: 4px 14px;
         border-radius: 20px;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.25rem;
     }
 
-    /* Sidebar Brand Block */
+    /* Sidebar brand block */
     .sidebar-brand {
         text-align: center;
-        padding: 1.2rem 0 0.5rem;
+        padding: 1rem 0 0.25rem;
     }
-    .sidebar-brand .brand-icon {
-        font-size: 2rem;
-        display: block;
-    }
-    .sidebar-brand .brand-name {
+    .sidebar-brand .sb-icon { font-size: 2rem; }
+    .sidebar-brand .sb-name {
         font-size: 1.15rem;
         font-weight: 700;
+        color: white !important;
         letter-spacing: -0.02em;
-        margin-top: 0.35rem;
+        margin-top: 0.3rem;
     }
-    .sidebar-brand .brand-ver {
-        font-size: 0.68rem;
+    .sidebar-brand .sb-ver {
+        font-size: 0.7rem;
         color: rgba(255,255,255,0.3) !important;
-        font-weight: 500;
         margin-top: 0.1rem;
     }
 
-    /* Sidebar About Card */
+    /* Sidebar about card */
     .sidebar-about {
         background: rgba(255,255,255,0.04);
         border: 1px solid rgba(255,255,255,0.06);
         border-radius: 12px;
-        padding: 1rem 1.15rem;
-        margin-top: 0.25rem;
+        padding: 1rem 1.1rem;
     }
-    .sidebar-about h4 {
-        font-size: 0.68rem !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.1em !important;
+    .sidebar-about .sa-title {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
         color: rgba(255,255,255,0.35) !important;
-        margin-bottom: 0.65rem !important;
+        margin-bottom: 0.6rem;
     }
-    .sidebar-about .about-row {
+    .sidebar-about .sa-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -441,46 +295,9 @@ st.markdown("""
         padding: 6px 0;
         border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .sidebar-about .about-row:last-child { border-bottom: none; }
-    .sidebar-about .about-key { color: rgba(255,255,255,0.45) !important; }
-    .sidebar-about .about-val { font-weight: 600; }
-
-    /* Risk Badge Pill */
-    .risk-badge {
-        display: inline-block;
-        padding: 5px 16px;
-        border-radius: 20px;
-        font-weight: 600;
-        font-size: 0.82rem;
-        letter-spacing: 0.01em;
-    }
-    .risk-badge.high {
-        background: rgba(255,69,58,0.1);
-        color: #FF453A;
-    }
-    .risk-badge.medium {
-        background: rgba(255,159,10,0.1);
-        color: #FF9F0A;
-    }
-    .risk-badge.low {
-        background: rgba(48,209,88,0.1);
-        color: #30D158;
-    }
-
-    /* Compact column spacing */
-    [data-testid="stHorizontalBlock"] {
-        gap: 1rem;
-    }
-
-    /* Hide Streamlit branding for cleaner look */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header[data-testid="stHeader"] {
-        background: rgba(245,245,247,0.8) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-    }
-
+    .sidebar-about .sa-row:last-child { border-bottom: none; }
+    .sidebar-about .sa-key { color: rgba(255,255,255,0.45) !important; }
+    .sidebar-about .sa-val { font-weight: 600; color: rgba(255,255,255,0.85) !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -494,7 +311,7 @@ def get_local_model():
 
 local_pipeline = get_local_model()
 
-# Plotly Apple-Style Layout Template
+# Plotly Apple-Style Layout
 PLOTLY_APPLE = dict(
     font=dict(
         family="Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif",
@@ -505,17 +322,8 @@ PLOTLY_APPLE = dict(
     plot_bgcolor="rgba(0,0,0,0)",
     margin=dict(t=52, l=48, r=20, b=48),
     title_font=dict(size=16, color="#1D1D1F"),
-    legend=dict(
-        font=dict(size=12, color="#6E6E73"),
-        bgcolor="rgba(0,0,0,0)",
-        borderwidth=0,
-    ),
-    hoverlabel=dict(
-        bgcolor="white",
-        font_size=13,
-        font_family="Inter, -apple-system, sans-serif",
-        bordercolor="rgba(0,0,0,0.08)",
-    ),
+    legend=dict(font=dict(size=12, color="#6E6E73"), bgcolor="rgba(0,0,0,0)", borderwidth=0),
+    hoverlabel=dict(bgcolor="white", font_size=13, font_family="Inter, sans-serif", bordercolor="#E5E5EA"),
 )
 APPLE_RISK_COLORS = {'Low': '#30D158', 'Medium': '#FF9F0A', 'High': '#FF453A'}
 
@@ -525,9 +333,9 @@ APPLE_RISK_COLORS = {'Low': '#30D158', 'Medium': '#FF9F0A', 'High': '#FF453A'}
 
 st.sidebar.markdown("""
 <div class="sidebar-brand">
-    <span class="brand-icon">⚡</span>
-    <div class="brand-name">Churn Predictor</div>
-    <div class="brand-ver">v2.0 — Production</div>
+    <div class="sb-icon">⚡</div>
+    <div class="sb-name">Churn Predictor</div>
+    <div class="sb-ver">v2.0 · Production</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -542,8 +350,6 @@ mode = st.sidebar.selectbox(
 api_url = "http://localhost:8000"
 if mode == "REST API Client (FastAPI)":
     api_url = st.sidebar.text_input("FastAPI Endpoint URL", value="http://localhost:8000")
-
-    # Ping API to verify status
     try:
         r = requests.get(f"{api_url}/", timeout=2)
         if r.status_code == 200:
@@ -551,29 +357,17 @@ if mode == "REST API Client (FastAPI)":
         else:
             st.sidebar.warning("⚠️ API online, but returned error")
     except requests.exceptions.RequestException:
-        st.sidebar.error("❌ Cannot connect to FastAPI server. Please check that it is running, or switch to Standalone mode.")
+        st.sidebar.error("❌ Cannot connect to FastAPI server. Switch to Standalone mode.")
 
 st.sidebar.markdown("---")
 
 st.sidebar.markdown("""
 <div class="sidebar-about">
-    <h4>System Details</h4>
-    <div class="about-row">
-        <span class="about-key">Model</span>
-        <span class="about-val">Logistic Regression</span>
-    </div>
-    <div class="about-row">
-        <span class="about-key">Balancing</span>
-        <span class="about-val">SMOTE</span>
-    </div>
-    <div class="about-row">
-        <span class="about-key">Target</span>
-        <span class="about-val">Churn (Yes / No)</span>
-    </div>
-    <div class="about-row">
-        <span class="about-key">Metric</span>
-        <span class="about-val">F1 Score</span>
-    </div>
+    <div class="sa-title">System Details</div>
+    <div class="sa-row"><span class="sa-key">Model</span><span class="sa-val">Logistic Regression</span></div>
+    <div class="sa-row"><span class="sa-key">Balancing</span><span class="sa-val">SMOTE</span></div>
+    <div class="sa-row"><span class="sa-key">Target</span><span class="sa-val">Churn (Yes / No)</span></div>
+    <div class="sa-row"><span class="sa-key">Metric</span><span class="sa-val">F1 Score</span></div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -583,11 +377,11 @@ st.sidebar.markdown("""
 
 st.markdown("""
 <div class="apple-hero">
-    <h1>⚡ Customer Churn Prediction</h1>
-    <p class="hero-sub">
+    <div class="apple-hero-title">⚡ Customer Churn Prediction</div>
+    <div class="apple-hero-sub">
         Production-grade ML platform for real-time customer risk scoring,
-        batch analytics, and intelligent retention strategy recommendations.
-    </p>
+        batch analytics, and intelligent retention strategies.
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -595,17 +389,14 @@ st.markdown("""
 #  TABS
 # ══════════════════════════════════════════════════════════════════════
 
-tab1, tab2, tab3 = st.tabs(["  Single Prediction  ", "  Batch Analytics  ", "  Model Diagnostics  "])
+tab1, tab2, tab3 = st.tabs(["👤 Single Prediction", "📂 Batch Analytics", "⚙️ Model Diagnostics"])
 
-# ─────────────────────────────────────────────────────────────────────
-#  TAB 1 — SINGLE CUSTOMER INFERENCE
-# ─────────────────────────────────────────────────────────────────────
+# ─────────────────── TAB 1: SINGLE CUSTOMER ───────────────────
 with tab1:
     st.markdown('<span class="section-pill">Customer Profile</span>', unsafe_allow_html=True)
     st.markdown("### Build a Customer Profile")
     st.caption("Configure the parameters below to calculate real-time churn risk.")
 
-    # Input panels
     col_demo, col_account, col_services = st.columns(3)
 
     with col_demo:
@@ -645,27 +436,17 @@ with tab1:
 
     st.markdown("---")
 
-    # Prediction logic
     customer_data = {
-        'gender': gender,
-        'SeniorCitizen': senior_citizen,
-        'Partner': partner,
-        'Dependents': dependents,
-        'tenure': tenure,
-        'PhoneService': phone_service,
-        'MultipleLines': multiple_lines,
-        'InternetService': internet_service,
-        'OnlineSecurity': online_security,
-        'OnlineBackup': online_backup,
-        'DeviceProtection': device_protection,
-        'TechSupport': tech_support,
-        'StreamingTV': streaming_tv,
-        'StreamingMovies': streaming_movies,
-        'Contract': contract,
-        'PaperlessBilling': paperless_billing,
+        'gender': gender, 'SeniorCitizen': senior_citizen,
+        'Partner': partner, 'Dependents': dependents,
+        'tenure': tenure, 'PhoneService': phone_service,
+        'MultipleLines': multiple_lines, 'InternetService': internet_service,
+        'OnlineSecurity': online_security, 'OnlineBackup': online_backup,
+        'DeviceProtection': device_protection, 'TechSupport': tech_support,
+        'StreamingTV': streaming_tv, 'StreamingMovies': streaming_movies,
+        'Contract': contract, 'PaperlessBilling': paperless_billing,
         'PaymentMethod': payment_method,
-        'MonthlyCharges': monthly_charges,
-        'TotalCharges': total_charges
+        'MonthlyCharges': monthly_charges, 'TotalCharges': total_charges
     }
 
     col_act, col_res = st.columns([1, 2])
@@ -681,7 +462,6 @@ with tab1:
             risk_level = "Low"
             prediction = 0
 
-            # Executing based on Mode selection
             if mode == "REST API Client (FastAPI)":
                 try:
                     response = requests.post(f"{api_url}/predict", json=customer_data, timeout=5)
@@ -712,62 +492,54 @@ with tab1:
                     st.error("Local pipeline file not found. Run training script first.")
                     st.stop()
 
-            # Display prediction result
             prob_pct = churn_probability * 100
 
             st.markdown('<span class="section-pill">Inference Result</span>', unsafe_allow_html=True)
             st.markdown("### Risk Assessment")
 
             if risk_level == "High":
-                badge_class = "high"
                 st.error(f"🚨 **High Risk** — {prob_pct:.1f}% churn probability detected")
             elif risk_level == "Medium":
-                badge_class = "medium"
                 st.warning(f"⚠️ **Medium Risk** — {prob_pct:.1f}% churn probability detected")
             else:
-                badge_class = "low"
                 st.success(f"✅ **Low Risk** — {prob_pct:.1f}% churn probability")
 
             st.progress(churn_probability)
 
-            # Retention Strategy
             st.markdown('<div class="strategy-card">', unsafe_allow_html=True)
             st.markdown("#### 💡 Retention Strategy")
             if risk_level == "High":
                 st.markdown("""
                 - **Immediate Action**: Active outreach — customer has high churn propensity.
-                - **Offer**: 20% discount on a 1-year contract extension OR 2 months free support services.
-                - **Primary Drivers**: Month-to-month terms, high charges, or lack of online tech support.
+                - **Offer**: 20% discount on 1-year extension OR 2 months free support.
+                - **Primary Drivers**: Month-to-month terms, high charges, or lack of tech support.
                 """)
             elif risk_level == "Medium":
                 if tenure < 12:
                     st.markdown("""
                     - **Onboarding Risk**: Low tenure customer experiencing friction.
-                    - **Action**: Automate CS touchpoint email with self-help portals and usage tips.
-                    - **Offer**: A free month of Online Security/Backup services.
+                    - **Action**: Automate CS touchpoint email with self-help portals.
+                    - **Offer**: Free month of Online Security/Backup services.
                     """)
                 else:
                     st.markdown("""
                     - **Action**: Check account health metrics. Monitor usage drop-off.
-                    - **Offer**: Device protection or fiber optic upgrade package discounts.
+                    - **Offer**: Device protection or fiber optic upgrade discounts.
                     """)
             else:
                 st.markdown("""
                 - **Account Status**: Strong loyalty, low risk.
-                - **Action**: Target for premium service cross-selling (streaming, multi-line).
-                - **Strategy**: Send an annual loyalty reward note.
+                - **Action**: Target for premium cross-selling (streaming, multi-line).
+                - **Strategy**: Send annual loyalty reward note.
                 """)
             st.markdown('</div>', unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────────────────────────────
-#  TAB 2 — BATCH CSV INFERENCE
-# ─────────────────────────────────────────────────────────────────────
+# ─────────────────── TAB 2: BATCH CSV ───────────────────
 with tab2:
     st.markdown('<span class="section-pill">Batch Processing</span>', unsafe_allow_html=True)
     st.markdown("### Bulk Customer Scoring")
     st.caption("Upload a CSV of customer accounts to score churn risk at scale.")
 
-    # Download sample block
     sample_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'sample_customers.csv')
     if os.path.exists(sample_path):
         with open(sample_path, "r") as f:
@@ -791,7 +563,6 @@ with tab2:
         if batch_btn:
             scored_df = None
 
-            # API Mode
             if mode == "REST API Client (FastAPI)":
                 try:
                     with st.spinner("Calling FastAPI batch engine..."):
@@ -807,12 +578,11 @@ with tab2:
                             st.error(f"FastAPI Batch Error: {response.text}")
                             st.stop()
                 except Exception as e:
-                    st.warning(f"Could not reach FastAPI API: {e}. Falling back to standalone python processing.")
+                    st.warning(f"Could not reach FastAPI API: {e}. Falling back to standalone processing.")
                     if local_pipeline is not None:
                         scored_df = predict_batch_customers(df_uploaded, local_pipeline)
                     else:
                         st.stop()
-            # Standalone Mode
             else:
                 if local_pipeline is not None:
                     with st.spinner("Scoring customer data locally..."):
@@ -824,7 +594,6 @@ with tab2:
             if scored_df is not None:
                 st.success("Batch scoring completed successfully.")
 
-                # Key metrics
                 tot_cust = len(scored_df)
                 high_risk = len(scored_df[scored_df['risk_level'] == 'High'])
                 med_risk = len(scored_df[scored_df['risk_level'] == 'Medium'])
@@ -834,46 +603,24 @@ with tab2:
                 # Glass Metric Cards
                 m1, m2, m3, m4 = st.columns(4)
                 with m1:
-                    st.markdown(f"""
-                    <div class="glass-metric">
-                        <div class="gm-icon">👥</div>
-                        <div class="gm-value">{tot_cust}</div>
-                        <div class="gm-label">Customers Scored</div>
-                    </div>""", unsafe_allow_html=True)
+                    st.markdown(f'<div class="glass-metric"><div class="gm-icon">👥</div><div class="gm-value">{tot_cust}</div><div class="gm-label">Customers Scored</div></div>', unsafe_allow_html=True)
                 with m2:
-                    st.markdown(f"""
-                    <div class="glass-metric">
-                        <div class="gm-icon">📊</div>
-                        <div class="gm-value">{churn_rate:.1f}%</div>
-                        <div class="gm-label">Overall Churn Rate</div>
-                    </div>""", unsafe_allow_html=True)
+                    st.markdown(f'<div class="glass-metric"><div class="gm-icon">📊</div><div class="gm-value">{churn_rate:.1f}%</div><div class="gm-label">Overall Churn Rate</div></div>', unsafe_allow_html=True)
                 with m3:
-                    st.markdown(f"""
-                    <div class="glass-metric">
-                        <div class="gm-icon">🔴</div>
-                        <div class="gm-value">{high_risk}</div>
-                        <div class="gm-label">High Risk</div>
-                    </div>""", unsafe_allow_html=True)
+                    st.markdown(f'<div class="glass-metric"><div class="gm-icon">🔴</div><div class="gm-value">{high_risk}</div><div class="gm-label">High Risk</div></div>', unsafe_allow_html=True)
                 with m4:
-                    st.markdown(f"""
-                    <div class="glass-metric">
-                        <div class="gm-icon">🟢</div>
-                        <div class="gm-value">{low_risk}</div>
-                        <div class="gm-label">Low Risk</div>
-                    </div>""", unsafe_allow_html=True)
+                    st.markdown(f'<div class="glass-metric"><div class="gm-icon">🟢</div><div class="gm-value">{low_risk}</div><div class="gm-label">Low Risk</div></div>', unsafe_allow_html=True)
 
-                st.write("")  # spacer
+                st.write("")
 
-                # Plotly Charts — Apple Style
+                # Plotly Charts
                 g1, g2 = st.columns(2)
 
                 with g1:
                     risk_counts = scored_df['risk_level'].value_counts().reset_index()
                     risk_counts.columns = ['Risk Level', 'Count']
                     fig_pie = px.pie(
-                        risk_counts,
-                        values='Count',
-                        names='Risk Level',
+                        risk_counts, values='Count', names='Risk Level',
                         title='Risk Distribution',
                         color='Risk Level',
                         color_discrete_map=APPLE_RISK_COLORS,
@@ -881,18 +628,14 @@ with tab2:
                     )
                     fig_pie.update_layout(**PLOTLY_APPLE)
                     fig_pie.update_traces(
-                        textfont_size=13,
-                        textinfo='percent+label',
+                        textfont_size=13, textinfo='percent+label',
                         marker=dict(line=dict(color='#FFFFFF', width=2)),
-                        hovertemplate='<b>%{label}</b><br>Count: %{value}<br>Share: %{percent}<extra></extra>',
                     )
                     st.plotly_chart(fig_pie, use_container_width=True)
 
                 with g2:
                     fig_scatter = px.scatter(
-                        scored_df,
-                        x='tenure',
-                        y='churn_probability',
+                        scored_df, x='tenure', y='churn_probability',
                         color='risk_level',
                         hover_data=['MonthlyCharges', 'Contract'],
                         title='Tenure vs Churn Propensity',
@@ -900,24 +643,14 @@ with tab2:
                         color_discrete_map=APPLE_RISK_COLORS,
                     )
                     fig_scatter.update_layout(**PLOTLY_APPLE)
-                    fig_scatter.update_traces(
-                        marker=dict(size=10, opacity=0.8, line=dict(width=1.5, color='white'))
-                    )
-                    fig_scatter.update_xaxes(
-                        gridcolor='rgba(0,0,0,0.04)', zerolinecolor='rgba(0,0,0,0.06)',
-                        title_font=dict(size=13, color='#6E6E73'),
-                    )
-                    fig_scatter.update_yaxes(
-                        gridcolor='rgba(0,0,0,0.04)', zerolinecolor='rgba(0,0,0,0.06)',
-                        title_font=dict(size=13, color='#6E6E73'),
-                    )
+                    fig_scatter.update_traces(marker=dict(size=10, opacity=0.8, line=dict(width=1.5, color='white')))
+                    fig_scatter.update_xaxes(gridcolor='rgba(0,0,0,0.04)', zerolinecolor='rgba(0,0,0,0.06)')
+                    fig_scatter.update_yaxes(gridcolor='rgba(0,0,0,0.04)', zerolinecolor='rgba(0,0,0,0.06)')
                     st.plotly_chart(fig_scatter, use_container_width=True)
 
-                # Scored Table
                 st.markdown("#### Scored Results")
                 st.dataframe(scored_df.style.background_gradient(subset=['churn_probability'], cmap='Reds'))
 
-                # Download link
                 csv_output = scored_df.to_csv(index=False)
                 st.download_button(
                     label="💾 Download Predictions CSV",
@@ -926,15 +659,12 @@ with tab2:
                     mime="text/csv"
                 )
 
-# ─────────────────────────────────────────────────────────────────────
-#  TAB 3 — MODEL DIAGNOSTICS
-# ─────────────────────────────────────────────────────────────────────
+# ─────────────────── TAB 3: MODEL DIAGNOSTICS ───────────────────
 with tab3:
     st.markdown('<span class="section-pill">Diagnostics</span>', unsafe_allow_html=True)
     st.markdown("### Model Performance & Calibration")
     st.caption("Inspect offline validation metrics, confusion matrices, and feature importances.")
 
-    # Read metrics.json
     metrics_path = os.path.join(config.MODEL_DIR, 'metrics.json')
     if os.path.exists(metrics_path):
         with open(metrics_path, 'r') as f:
@@ -944,10 +674,8 @@ with tab3:
         best_metrics = metrics_payload['best_model_metrics']
         comparison_list = metrics_payload['comparison']
 
-        # Display best model
         st.info(f"🏆 **Production Model**: **{best_model_name}** — optimized for F1-Score to offset cost of false negatives.")
 
-        # Metrics cards
         c1, c2, c3, c4, c5 = st.columns(5)
         with c1:
             st.metric(label="Accuracy", value=f"{best_metrics['Accuracy']*100:.2f}%")
@@ -960,17 +688,14 @@ with tab3:
         with c5:
             st.metric(label="ROC-AUC", value=f"{best_metrics['ROC-AUC']*100:.2f}%")
 
-        # Model Comparison Table
-        st.write("")  # spacer
+        st.write("")
         st.markdown("#### Cross-Validated Evaluation")
         comp_df = pd.DataFrame(comparison_list).set_index('Model')
         st.dataframe(comp_df.style.highlight_max(color='#D1FAE5', axis=0))
-
     else:
-        st.warning("Diagnostics metrics.json file not found. Run training process to compile model diagnostics.")
+        st.warning("Diagnostics metrics.json not found. Run training process first.")
 
-    # Image Plot displays
-    st.write("")  # spacer
+    st.write("")
     st.markdown("#### Evaluation Visualizations")
     img_col1, img_col2, img_col3 = st.columns(3)
 
