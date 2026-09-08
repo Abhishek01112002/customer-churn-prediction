@@ -979,16 +979,15 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-    st.markdown('<div class="sidebar-group-label">WORKSPACE</div>', unsafe_allow_html=True)
-    active_nav = st.radio(
-        "Navigation",
+    active_nav = st.selectbox(
+        "Workspace View",
         [
             "Single Assessment",
             "Batch Portfolio Analytics",
             "Model Diagnostics & Metrics",
             "System & API Config",
         ],
-        label_visibility="collapsed",
+        index=0,
     )
 
     st.markdown("---")
