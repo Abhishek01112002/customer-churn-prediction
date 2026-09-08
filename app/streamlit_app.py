@@ -99,7 +99,12 @@ st.markdown(
     }
 
     /* Force all text in main workspace to high-contrast dark */
-    .stApp, .stApp p, .stApp span, .stApp label, .stApp div, .stApp li {
+    section[data-testid="stMain"],
+    section[data-testid="stMain"] p,
+    section[data-testid="stMain"] span,
+    section[data-testid="stMain"] label,
+    section[data-testid="stMain"] div,
+    section[data-testid="stMain"] li {
         color: var(--slate-900);
         font-family: var(--font-sans) !important;
     }
@@ -114,7 +119,7 @@ st.markdown(
     /* ─── Sidebar: Deep Slate Enterprise Theme ─── */
     section[data-testid="stSidebar"] {
         background-color: var(--slate-900) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
     }
     section[data-testid="stSidebar"] * {
         font-family: var(--font-sans) !important;
@@ -125,45 +130,90 @@ st.markdown(
     section[data-testid="stSidebar"] h4 {
         color: var(--white) !important;
     }
-    section[data-testid="stSidebar"] p,
-    section[data-testid="stSidebar"] span,
-    section[data-testid="stSidebar"] label {
-        color: var(--slate-300) !important;
+    /* Sidebar Labels: Guaranteed Pure White & Bold */
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] label *,
+    section[data-testid="stSidebar"] label p,
+    section[data-testid="stSidebar"] label span,
+    section[data-testid="stSidebar"] label div,
+    section[data-testid="stSidebar"] [data-testid="stWidgetLabel"],
+    section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] *,
+    section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+    section[data-testid="stSidebar"] .stSelectbox label,
+    section[data-testid="stSidebar"] .stSelectbox label *,
+    section[data-testid="stSidebar"] .stTextInput label,
+    section[data-testid="stSidebar"] .stTextInput label * {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.01em !important;
+        margin-bottom: 0.35rem !important;
     }
     section[data-testid="stSidebar"] hr {
-        border-color: rgba(255, 255, 255, 0.1) !important;
+        border-color: rgba(255, 255, 255, 0.12) !important;
         margin: 1.25rem 0 !important;
     }
-    section[data-testid="stSidebar"] .stSelectbox > div > div {
-        background-color: var(--slate-800) !important;
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    /* Sidebar Selectbox Container */
+    section[data-testid="stSidebar"] .stSelectbox > div > div,
+    section[data-testid="stSidebar"] [data-baseweb="select"] > div {
+        background-color: #1E293B !important;
+        border: 1.5px solid #475569 !important;
         border-radius: 6px !important;
-        color: var(--white) !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
     }
-    section[data-testid="stSidebar"] .stSelectbox > div > div span {
-        color: var(--white) !important;
-    }
-    section[data-testid="stSidebar"] .stTextInput > div > div > input {
-        background-color: var(--slate-800) !important;
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
-        border-radius: 6px !important;
-        color: var(--white) !important;
-    }
-    section[data-testid="stSidebar"] .stRadio label {
-        color: var(--slate-200) !important;
-        font-size: 0.88rem !important;
+    /* Sidebar Selectbox Text / Spans / Options - Guaranteed Bright White */
+    section[data-testid="stSidebar"] .stSelectbox > div > div *,
+    section[data-testid="stSidebar"] .stSelectbox > div > div span,
+    section[data-testid="stSidebar"] .stSelectbox > div > div div,
+    section[data-testid="stSidebar"] .stSelectbox > div > div p,
+    section[data-testid="stSidebar"] [data-baseweb="select"] *,
+    section[data-testid="stSidebar"] [data-baseweb="select"] span,
+    section[data-testid="stSidebar"] [data-baseweb="select"] div,
+    section[data-testid="stSidebar"] [data-baseweb="select"] [aria-selected="true"] {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-size: 0.9rem !important;
         font-weight: 500 !important;
     }
+    section[data-testid="stSidebar"] .stSelectbox svg {
+        fill: #FFFFFF !important;
+    }
+    /* Sidebar Text Input */
+    section[data-testid="stSidebar"] .stTextInput > div > div > input {
+        background-color: #1E293B !important;
+        border: 1.5px solid #475569 !important;
+        border-radius: 6px !important;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-family: var(--font-mono) !important;
+        font-size: 0.88rem !important;
+    }
+    /* Sidebar Captions */
+    section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] p,
+    section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] span {
+        color: #CBD5E1 !important;
+        -webkit-text-fill-color: #CBD5E1 !important;
+        font-size: 0.78rem !important;
+    }
 
-    /* ─── Form Inputs: Crisp White, Slate-300 Border, Dark Text ─── */
-    .stSelectbox label, .stSlider label, .stNumberInput label, .stTextInput label {
+    /* ─── Main Workspace Form Inputs: Crisp White, Slate-300 Border, Dark Text ─── */
+    section[data-testid="stMain"] .stSelectbox label,
+    section[data-testid="stMain"] .stSlider label,
+    section[data-testid="stMain"] .stNumberInput label,
+    section[data-testid="stMain"] .stTextInput label,
+    .main .stSelectbox label,
+    .main .stSlider label,
+    .main .stNumberInput label,
+    .main .stTextInput label {
         color: var(--slate-700) !important;
         font-size: 0.82rem !important;
         font-weight: 600 !important;
         letter-spacing: 0.01em !important;
         margin-bottom: 0.25rem !important;
     }
-    .stSelectbox > div > div {
+    section[data-testid="stMain"] .stSelectbox > div > div,
+    .main .stSelectbox > div > div {
         background-color: var(--white) !important;
         border: 1px solid var(--slate-300) !important;
         border-radius: 6px !important;
@@ -172,23 +222,29 @@ st.markdown(
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
         transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
-    .stSelectbox > div > div:focus-within {
+    section[data-testid="stMain"] .stSelectbox > div > div:focus-within,
+    .main .stSelectbox > div > div:focus-within {
         border-color: var(--slate-900) !important;
         box-shadow: 0 0 0 1px var(--slate-900) !important;
     }
-    .stSelectbox > div > div span {
+    section[data-testid="stMain"] .stSelectbox > div > div span,
+    .main .stSelectbox > div > div span {
         color: var(--slate-900) !important;
+        -webkit-text-fill-color: var(--slate-900) !important;
     }
-    .stNumberInput > div > div > input {
+    section[data-testid="stMain"] .stNumberInput > div > div > input,
+    .main .stNumberInput > div > div > input {
         background-color: var(--white) !important;
         border: 1px solid var(--slate-300) !important;
         border-radius: 6px !important;
         color: var(--slate-900) !important;
+        -webkit-text-fill-color: var(--slate-900) !important;
         font-family: var(--font-mono) !important;
         font-size: 0.9rem !important;
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
     }
-    .stNumberInput > div > div > input:focus {
+    section[data-testid="stMain"] .stNumberInput > div > div > input:focus,
+    .main .stNumberInput > div > div > input:focus {
         border-color: var(--slate-900) !important;
         box-shadow: 0 0 0 1px var(--slate-900) !important;
     }
@@ -787,14 +843,37 @@ st.markdown(
         display: inline-block;
     }
 
-    /* Sidebar Group Label */
+    /* Sidebar Group Label: High Contrast Light Slate */
     .sidebar-group-label {
-        font-size: 0.68rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--slate-400) !important;
-        margin: 1rem 0 0.5rem;
+        font-size: 0.74rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.08em !important;
+        color: #E2E8F0 !important;
+        -webkit-text-fill-color: #E2E8F0 !important;
+        margin: 1.25rem 0 0.4rem !important;
+    }
+
+    /* Selectbox Dropdown Popover & Options */
+    div[data-baseweb="popover"],
+    div[data-baseweb="menu"],
+    ul[role="listbox"] {
+        background-color: #FFFFFF !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 6px !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+    }
+    li[role="option"],
+    li[role="option"] *,
+    li[role="option"] span,
+    li[role="option"] div {
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
+        font-size: 0.88rem !important;
+    }
+    li[role="option"]:hover,
+    li[role="option"][aria-selected="true"] {
+        background-color: #F1F5F9 !important;
     }
 
     /* Sidebar Telemetry Card */
@@ -1020,6 +1099,7 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
+    st.markdown('<div class="sidebar-group-label">WORKSPACE</div>', unsafe_allow_html=True)
     active_nav = st.selectbox(
         "Workspace View",
         [
