@@ -23,9 +23,19 @@ from src import config
 # ══════════════════════════════════════════════════════════════════════
 #  PAGE CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+FAVICON_PATH = os.path.join(APP_DIR, "assets", "favicon.png")
+if not os.path.exists(FAVICON_PATH):
+    FAVICON_PATH = os.path.join(os.getcwd(), "assets", "favicon.png")
+
+try:
+    _page_icon = Image.open(FAVICON_PATH) if os.path.exists(FAVICON_PATH) else None
+except Exception:
+    _page_icon = FAVICON_PATH if os.path.exists(FAVICON_PATH) else None
+
 st.set_page_config(
     page_title="ChurnAI — Enterprise Churn Risk Intelligence",
-    page_icon="⚡",
+    page_icon=_page_icon,
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -810,16 +820,18 @@ st.markdown(
         gap: 0.5rem;
     }
     .brand-logo-icon {
-        width: 28px;
-        height: 28px;
-        border-radius: 6px;
-        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
-        font-weight: 800;
-        font-size: 0.9rem;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+        flex-shrink: 0;
+    }
+    .brand-logo-icon svg {
+        display: block;
     }
     .brand-logo-text {
         font-size: 1.05rem;
@@ -1087,7 +1099,22 @@ with st.sidebar:
         """
         <div class="sidebar-brand-box">
             <div class="brand-logo-row">
-                <div class="brand-logo-icon">⚡</div>
+                <div class="brand-logo-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polygon points="12,2 21,7 21,17 12,22 3,17 3,7" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+                        <line x1="12" y1="2" x2="12" y2="22" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
+                        <line x1="3" y1="7" x2="21" y2="17" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
+                        <line x1="3" y1="17" x2="21" y2="7" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
+                        <circle cx="12" cy="12" r="3.2" fill="#FFFFFF"/>
+                        <circle cx="12" cy="12" r="1.5" fill="#1D4ED8"/>
+                        <circle cx="12" cy="2" r="1.5" fill="#FFFFFF"/>
+                        <circle cx="21" cy="7" r="1.5" fill="#FFFFFF"/>
+                        <circle cx="21" cy="17" r="1.5" fill="#FFFFFF"/>
+                        <circle cx="12" cy="22" r="1.5" fill="#FFFFFF"/>
+                        <circle cx="3" cy="17" r="1.5" fill="#FFFFFF"/>
+                        <circle cx="3" cy="7" r="1.5" fill="#FFFFFF"/>
+                    </svg>
+                </div>
                 <div class="brand-logo-text">ChurnAI</div>
             </div>
             <div class="brand-status-sub">
