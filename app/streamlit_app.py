@@ -6,6 +6,7 @@ import requests
 import pandas as pd
 import numpy as np
 import streamlit as st
+import streamlit.components.v1 as components
 import plotly.express as px
 import plotly.graph_objects as go
 from PIL import Image
@@ -40,12 +41,41 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# ─── Disable Browser Auto-Translation (Google Chrome) to Prevent React DOM Text Duplication ───
+components.html(
+    """
+    <script>
+    (function() {
+        try {
+            var doc = window.parent.document;
+            doc.documentElement.setAttribute('translate', 'no');
+            doc.documentElement.classList.add('notranslate');
+            if (doc.body) {
+                doc.body.setAttribute('translate', 'no');
+                doc.body.classList.add('notranslate');
+            }
+            if (!doc.querySelector('meta[name="google"][content="notranslate"]')) {
+                var meta = doc.createElement('meta');
+                meta.name = 'google';
+                meta.content = 'notranslate';
+                doc.head.appendChild(meta);
+            }
+        } catch (e) {}
+    })();
+    </script>
+    """,
+    height=0,
+    width=0,
+)
+
 # ══════════════════════════════════════════════════════════════════════
 #  ENTERPRISE DESIGN SYSTEM (Linear / Stripe / Vercel Aesthetic)
 #  Guaranteed high contrast, strict light-theme readability, zero clashes
 # ══════════════════════════════════════════════════════════════════════
 st.markdown(
     """
+    <meta name="google" content="notranslate">
+    <meta name="googlebot" content="notranslate">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -509,6 +539,10 @@ st.markdown(
         padding: 0.45rem 1.1rem !important;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
         transition: all 0.15s ease !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        cursor: pointer !important;
     }
     [data-testid="stFileUploaderDropzone"] button:hover,
     section[data-testid="stFileUploaderDropzone"] button:hover {
@@ -517,6 +551,13 @@ st.markdown(
         color: #1D4ED8 !important;
         -webkit-text-fill-color: #1D4ED8 !important;
         box-shadow: 0 2px 5px rgba(37, 99, 235, 0.15) !important;
+    }
+    /* In case browser translation injected duplicate elements, suppress all but first */
+    [data-testid="stFileUploaderDropzone"] button font:not(:first-of-type) {
+        display: none !important;
+    }
+    iframe[height="0"] {
+        display: none !important;
     }
 
     /* Uploaded File Pill (when a CSV is selected) */
