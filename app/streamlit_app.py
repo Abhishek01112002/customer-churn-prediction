@@ -1080,6 +1080,349 @@ st.markdown(
     .sidebar-telemetry-row:last-child { border-bottom: none; }
     .st-key { color: var(--slate-400) !important; }
     .st-val { font-family: var(--font-mono); font-weight: 600; color: var(--white) !important; }
+
+    /* ══════════════════════════════════════════════════════════════
+       FAANG-GRADE RESPONSIVE & MOBILE DESIGN SYSTEM
+    ══════════════════════════════════════════════════════════════ */
+
+    /* Global Responsive Viewport & Padding */
+    .block-container,
+    section[data-testid="stMain"] .block-container,
+    [data-testid="stMainBlockContainer"] {
+        max-width: 1240px !important;
+        padding-top: 1.5rem !important;
+        padding-bottom: 4rem !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+    }
+
+    /* Decision Panel (Result Card) */
+    .decision-panel {
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 10px;
+        padding: 24px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        margin-top: 16px;
+    }
+    .decision-panel-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #E2E8F0;
+        margin-bottom: 16px;
+    }
+    .decision-panel-top-left {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+    .decision-panel-top-right {
+        text-align: right;
+    }
+    .risk-meter-wrapper {
+        margin: 20px 0 10px 0;
+    }
+    .risk-meter-labels-top {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        font-weight: 700;
+        color: #64748B;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
+    }
+    .risk-meter-labels-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 8px;
+    }
+
+    /* Attribution Analysis Box */
+    .explain-panel {
+        background-color: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 8px;
+        padding: 18px;
+        margin-top: 18px;
+    }
+    .explain-panel-title {
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #334155;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .explain-factor-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #E2E8F0;
+        font-size: 0.84rem;
+    }
+    .explain-factor-row:last-child {
+        border-bottom: none;
+    }
+    .explain-factor-info {
+        display: flex;
+        flex-direction: column;
+    }
+    .explain-factor-title {
+        font-weight: 600;
+        color: #0F172A;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .explain-factor-desc {
+        font-size: 0.72rem;
+        color: #64748B;
+        margin-top: 2px;
+    }
+    .explain-factor-badge {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        min-width: 140px;
+    }
+
+    /* Touch Targets (FAANG iOS & Android Standard >= 44px) */
+    .stButton > button,
+    button[data-testid="stBaseButton-primary"],
+    button[data-testid="stBaseButton-secondary"],
+    .stDownloadButton > button {
+        min-height: 46px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        touch-action: manipulation;
+    }
+
+    /* Smooth Touch Scrolling for Data Tables */
+    [data-testid="stDataFrame"],
+    .stTable,
+    div[data-testid="stTable"] {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        max-width: 100% !important;
+        border-radius: 8px !important;
+    }
+
+    /* ─── Breakpoint 1: Medium Tablets & Small Laptops (<= 992px) ─── */
+    @media screen and (max-width: 992px) {
+        .block-container,
+        section[data-testid="stMain"] .block-container,
+        [data-testid="stMainBlockContainer"] {
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
+            padding-top: 1.25rem !important;
+        }
+        .kpi-strip {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 0.65rem !important;
+        }
+    }
+
+    /* ─── Breakpoint 2: Tablets & Mobile Devices (<= 768px) ─── */
+    @media screen and (max-width: 768px) {
+        html, body, .stApp {
+            overflow-x: hidden !important;
+        }
+
+        .block-container,
+        section[data-testid="stMain"] .block-container,
+        [data-testid="stMainBlockContainer"] {
+            padding-left: 0.85rem !important;
+            padding-right: 0.85rem !important;
+            padding-top: 1rem !important;
+            padding-bottom: 3.5rem !important;
+        }
+
+        /* Auto-stack Streamlit columns vertically on mobile */
+        [data-testid="stHorizontalBlock"] {
+            flex-wrap: wrap !important;
+            gap: 0.75rem !important;
+        }
+        [data-testid="stHorizontalBlock"] > [data-testid="column"] {
+            flex: 1 1 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        /* iOS Safari Auto-Zoom Fix: inputs must be >= 16px */
+        input, select, textarea,
+        [data-testid="stNumberInput"] input,
+        [data-testid="stTextInput"] input,
+        .stSelectbox div[role="combobox"],
+        .stSelectbox input {
+            font-size: 16px !important;
+        }
+
+        /* Title bar mobile stacking */
+        .app-title-bar {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 0.75rem !important;
+            padding-bottom: 0.65rem !important;
+            margin-bottom: 1rem !important;
+        }
+        .app-title {
+            font-size: clamp(1.25rem, 5vw, 1.55rem) !important;
+        }
+        .app-subtitle {
+            font-size: 0.8rem !important;
+            line-height: 1.4 !important;
+        }
+        .env-badge-group {
+            flex-wrap: wrap !important;
+            gap: 0.35rem !important;
+            width: 100% !important;
+        }
+        .top-breadcrumb {
+            flex-wrap: wrap !important;
+            font-size: 0.72rem !important;
+            gap: 0.25rem !important;
+        }
+
+        /* KPI Strip 2x2 grid */
+        .kpi-strip {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 0.5rem !important;
+            margin-bottom: 1rem !important;
+        }
+        .kpi-card {
+            padding: 0.7rem 0.8rem !important;
+        }
+        .kpi-value {
+            font-size: 1.05rem !important;
+        }
+
+        /* Full-width Thumb-Friendly CTA buttons */
+        .stButton > button,
+        button[data-testid="stBaseButton-primary"],
+        .stDownloadButton > button {
+            width: 100% !important;
+            min-height: 48px !important;
+            font-size: 0.95rem !important;
+            padding: 0.75rem 1rem !important;
+        }
+
+        /* Result Panel Mobile Alignment */
+        .decision-panel {
+            padding: 16px 14px !important;
+            margin-top: 12px !important;
+        }
+        .decision-panel-top {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 12px !important;
+            padding-bottom: 12px !important;
+            margin-bottom: 12px !important;
+        }
+        .decision-panel-top-left {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 8px !important;
+        }
+        .decision-panel-top-right {
+            text-align: left !important;
+            width: 100% !important;
+            padding-top: 6px !important;
+            border-top: 1px dashed #E2E8F0 !important;
+        }
+        .score-giant {
+            font-size: 2.3rem !important;
+        }
+
+        /* Playbook Container Stacking */
+        .playbook-container {
+            grid-template-columns: 1fr !important;
+            gap: 0.65rem !important;
+        }
+
+        /* Mobile File Dropzone */
+        [data-testid="stFileUploaderDropzone"],
+        section[data-testid="stFileUploaderDropzone"] {
+            padding: 1rem !important;
+        }
+        [data-testid="stFileUploaderDropzone"] button::after,
+        section[data-testid="stFileUploaderDropzone"] button::after,
+        [data-testid="stFileUploader"] button::after {
+            font-size: 0.82rem !important;
+        }
+
+        /* Clean Mobile Sidebar Hamburger Toggle */
+        button[data-testid="stSidebarCollapseButton"],
+        button[data-testid="baseButton-headerNoPadding"],
+        header[data-testid="stHeader"] button {
+            background-color: #FFFFFF !important;
+            border: 1px solid var(--slate-300) !important;
+            border-radius: 6px !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+            min-height: 36px !important;
+            min-width: 36px !important;
+            margin-top: 6px !important;
+            margin-left: 6px !important;
+        }
+    }
+
+    /* ─── Breakpoint 3: Small Mobile Devices (<= 480px) ─── */
+    @media screen and (max-width: 480px) {
+        .block-container,
+        section[data-testid="stMain"] .block-container,
+        [data-testid="stMainBlockContainer"] {
+            padding-left: 0.65rem !important;
+            padding-right: 0.65rem !important;
+            padding-top: 0.75rem !important;
+        }
+
+        /* KPI Strip stacks to single column on narrow screens */
+        .kpi-strip {
+            grid-template-columns: 1fr !important;
+            gap: 0.45rem !important;
+        }
+
+        /* Risk meter labels scale down gracefully */
+        .risk-meter-labels-top {
+            font-size: 9px !important;
+            letter-spacing: 0 !important;
+        }
+        .risk-meter-labels-bottom {
+            font-size: 10px !important;
+            flex-wrap: wrap !important;
+            gap: 4px !important;
+        }
+
+        /* Attribution row items stack neatly on small phones */
+        .explain-panel {
+            padding: 12px 10px !important;
+        }
+        .explain-factor-row {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 6px !important;
+            padding: 10px 0 !important;
+        }
+        .explain-factor-badge {
+            align-self: flex-start !important;
+            justify-content: flex-start !important;
+            min-width: unset !important;
+        }
+
+        /* Form sections padding */
+        .form-section-card {
+            padding: 1rem 0.85rem 0.65rem !important;
+        }
+    }
 </style>
 """,
     unsafe_allow_html=True,
@@ -1634,13 +1977,13 @@ if active_nav == "Single Assessment":
                 status_label = "✅ LOW RISK • STABLE ACCOUNT"
                 sub_text = "Account displays strong retention signals (<40%). Excellent candidate for cross-selling."
 
-            # Render Premium Decision Support Panel (Inline styles for bulletproof rendering on Cloud)
+            # Render Premium Decision Support Panel (Responsive FAANG-grade classes)
             pin_left = min(max(pct, 2.0), 98.0)
             panel_html = (
-                f'<div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 10px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-top: 16px;">'
-                f'<div style="display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid #E2E8F0; margin-bottom: 16px;">'
-                f'<div style="display: flex; align-items: baseline; gap: 16px;">'
-                f'<span class="score-giant {level_class}" style="font-family: var(--font-mono); font-size: 2.8rem; font-weight: 800; line-height: 1;">{pct:.1f}%</span>'
+                f'<div class="decision-panel">'
+                f'<div class="decision-panel-top">'
+                f'<div class="decision-panel-top-left">'
+                f'<span class="score-giant {level_class}">{pct:.1f}%</span>'
                 f'<div>'
                 f'<span class="risk-status-badge {level_class}">{status_label}</span>'
                 f'<div style="font-size: 0.8rem; color: #64748B; margin-top: 6px;">'
@@ -1648,13 +1991,13 @@ if active_nav == "Single Assessment":
                 f'</div>'
                 f'</div>'
                 f'</div>'
-                f'<div style="text-align: right;">'
+                f'<div class="decision-panel-top-right">'
                 f'<div style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #64748B;">Decision Boundary</div>'
                 f'<div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; color: #0F172A;">Threshold: 0.500</div>'
                 f'</div>'
                 f'</div>'
-                f'<div style="margin: 20px 0 10px 0;">'
-                f'<div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">'
+                f'<div class="risk-meter-wrapper">'
+                f'<div class="risk-meter-labels-top">'
                 f'<span style="color: #059669;">0% Safe</span>'
                 f'<span style="color: #D97706;">40% Moderate</span>'
                 f'<span style="color: #DC2626;">70% High Risk</span>'
@@ -1665,7 +2008,7 @@ if active_nav == "Single Assessment":
                 f'<div style="width: 6px; height: 6px; border-radius: 50%; background-color: #FFFFFF;"></div>'
                 f'</div>'
                 f'</div>'
-                f'<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">'
+                f'<div class="risk-meter-labels-bottom">'
                 f'<span style="font-size: 12px; color: #64748B;">Low Risk Zone</span>'
                 f'<span style="font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: #0F172A; background: #F1F5F9; padding: 2px 8px; border-radius: 4px;">Score: {pct:.1f}% ({risk_level} Risk)</span>'
                 f'<span style="font-size: 12px; color: #DC2626; font-weight: 600;">Critical Hazard (&gt;70%)</span>'
@@ -1686,12 +2029,12 @@ if active_nav == "Single Assessment":
                 pill_text = "#991B1B" if item['delta'] > 0 else "#065F46"
                 pill_border = "#FECACA" if item['delta'] > 0 else "#A7F3D0"
                 factor_rows.append(
-                    f'<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #E2E8F0; font-size: 0.84rem;">'
-                    f'<div>'
-                    f'<div style="font-weight: 600; color: #0F172A; display: flex; align-items: center; gap: 6px;">{icon} {item["factor"]}</div>'
-                    f'<div style="font-size: 0.72rem; color: #64748B; margin-top: 2px;">{item["detail"]}</div>'
+                    f'<div class="explain-factor-row">'
+                    f'<div class="explain-factor-info">'
+                    f'<div class="explain-factor-title">{icon} {item["factor"]}</div>'
+                    f'<div class="explain-factor-desc">{item["detail"]}</div>'
                     f'</div>'
-                    f'<div style="display: flex; align-items: center; justify-content: flex-end; min-width: 140px;">'
+                    f'<div class="explain-factor-badge">'
                     f'<span style="font-family: var(--font-mono); font-weight: 700; font-size: 0.78rem; color: {pill_text}; background-color: {pill_bg}; padding: 3px 8px; border-radius: 4px; border: 1px solid {pill_border};">'
                     f'{sign}{delta_pct:.0f}% hazard impact'
                     f'</span>'
@@ -1700,8 +2043,8 @@ if active_nav == "Single Assessment":
                 )
 
             explain_html = (
-                f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 18px; margin-top: 18px;">'
-                f'<div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #334155; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">'
+                f'<div class="explain-panel">'
+                f'<div class="explain-panel-title">'
                 f'🔍 Attribution Analysis: Key Drivers Influencing This Prediction'
                 f'</div>'
                 f'{"".join(factor_rows)}'
