@@ -37,7 +37,7 @@ st.set_page_config(
     page_title="ChurnAI — Enterprise Churn Risk Intelligence",
     page_icon=_page_icon,
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="auto",
 )
 
 # ─── Disable Browser Auto-Translation (Google Chrome) to Prevent React DOM Text Duplication ───
