@@ -20,9 +20,14 @@ A production-grade, end-to-end Machine Learning system predicting customer churn
 
 ---
 
-## 🔗 Live Application Links
-- **Interactive Streamlit Dashboard**: [Deploy on Streamlit Cloud](https://streamlit.io/cloud) *(See instructions below to link your repository)*
-- **Production REST API Documentation (Swagger)**: [Deploy on Hugging Face Spaces](https://huggingface.co/spaces) *(See instructions below)*
+## 🔗 Live Application
+<div align="center">
+
+<a href="https://customer-churn-prediction-by-abhishek.streamlit.app/"><img src="https://img.shields.io/badge/LIVE%20STREAMLIT%20APP-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white"/></a>
+&nbsp;
+<a href="https://github.com/Abhishek01112002/customer-churn-prediction"><img src="https://img.shields.io/badge/SOURCE%20CODE-111827?style=for-the-badge&logo=github&logoColor=white"/></a>
+
+</div>
 
 ---
 
