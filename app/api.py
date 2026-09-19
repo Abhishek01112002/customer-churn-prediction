@@ -22,6 +22,24 @@ from src.predict import (
 )
 from src import config
 
+from contextlib import asynccontextmanager
+
+# ---------------------------------------------------------------------------
+# Pipeline loading & Lifespan
+# ---------------------------------------------------------------------------
+
+pipeline = None       # Calibrated — used for predictions
+base_pipeline = None  # Pre-calibration — used for SHAP
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global pipeline, base_pipeline
+    pipeline = load_pipeline()
+    base_pipeline = load_base_pipeline()
+    yield
+
+
 # ---------------------------------------------------------------------------
 # App initialisation
 # ---------------------------------------------------------------------------
@@ -33,6 +51,7 @@ app = FastAPI(
         "Protected prediction and explanation endpoints require an X-API-Key header."
     ),
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 # ---------------------------------------------------------------------------
@@ -79,44 +98,29 @@ async def require_api_key(api_key: Optional[str] = Security(_api_key_header)):
 
 
 # ---------------------------------------------------------------------------
-# Pipeline loading
-# ---------------------------------------------------------------------------
-
-pipeline = None       # Calibrated — used for predictions
-base_pipeline = None  # Pre-calibration — used for SHAP
-
-
-@app.on_event("startup")
-def startup_event():
-    global pipeline, base_pipeline
-    pipeline = load_pipeline()
-    base_pipeline = load_base_pipeline()
-
-
-# ---------------------------------------------------------------------------
 # Request / Response schemas
 # ---------------------------------------------------------------------------
 
 class CustomerInput(BaseModel):
-    gender: str = Field(..., example="Female", description="Gender of the customer (Female, Male)")
-    SeniorCitizen: int = Field(..., example=0, description="Senior citizen indicator (0, 1)")
-    Partner: str = Field(..., example="Yes", description="Whether the customer has a partner (Yes, No)")
-    Dependents: str = Field(..., example="No", description="Whether the customer has dependents (Yes, No)")
-    tenure: int = Field(..., example=1, description="Number of months the customer has stayed with the company")
-    PhoneService: str = Field(..., example="No", description="Whether the customer has a phone service (Yes, No)")
-    MultipleLines: str = Field(..., example="No phone service", description="Whether the customer has multiple lines")
-    InternetService: str = Field(..., example="DSL", description="Customer's internet service provider (DSL, Fiber optic, No)")
-    OnlineSecurity: str = Field(..., example="No", description="Whether the customer has online security")
-    OnlineBackup: str = Field(..., example="Yes", description="Whether the customer has online backup")
-    DeviceProtection: str = Field(..., example="No", description="Whether the customer has device protection")
-    TechSupport: str = Field(..., example="No", description="Whether the customer has tech support")
-    StreamingTV: str = Field(..., example="No", description="Whether the customer has streaming TV")
-    StreamingMovies: str = Field(..., example="No", description="Whether the customer has streaming movies")
-    Contract: str = Field(..., example="Month-to-month", description="The contract term of the customer")
-    PaperlessBilling: str = Field(..., example="Yes", description="Whether the customer has paperless billing (Yes, No)")
-    PaymentMethod: str = Field(..., example="Electronic check", description="The customer's payment method")
-    MonthlyCharges: float = Field(..., example=29.85, description="The amount charged to the customer monthly")
-    TotalCharges: float = Field(..., example=29.85, description="The total amount charged to the customer")
+    gender: str = Field(..., examples=["Female"], description="Gender of the customer (Female, Male)")
+    SeniorCitizen: int = Field(..., examples=[0], description="Senior citizen indicator (0, 1)")
+    Partner: str = Field(..., examples=["Yes"], description="Whether the customer has a partner (Yes, No)")
+    Dependents: str = Field(..., examples=["No"], description="Whether the customer has dependents (Yes, No)")
+    tenure: int = Field(..., examples=[1], description="Number of months the customer has stayed with the company")
+    PhoneService: str = Field(..., examples=["No"], description="Whether the customer has a phone service (Yes, No)")
+    MultipleLines: str = Field(..., examples=["No phone service"], description="Whether the customer has multiple lines")
+    InternetService: str = Field(..., examples=["DSL"], description="Customer's internet service provider (DSL, Fiber optic, No)")
+    OnlineSecurity: str = Field(..., examples=["No"], description="Whether the customer has online security")
+    OnlineBackup: str = Field(..., examples=["Yes"], description="Whether the customer has online backup")
+    DeviceProtection: str = Field(..., examples=["No"], description="Whether the customer has device protection")
+    TechSupport: str = Field(..., examples=["No"], description="Whether the customer has tech support")
+    StreamingTV: str = Field(..., examples=["No"], description="Whether the customer has streaming TV")
+    StreamingMovies: str = Field(..., examples=["No"], description="Whether the customer has streaming movies")
+    Contract: str = Field(..., examples=["Month-to-month"], description="The contract term of the customer")
+    PaperlessBilling: str = Field(..., examples=["Yes"], description="Whether the customer has paperless billing (Yes, No)")
+    PaymentMethod: str = Field(..., examples=["Electronic check"], description="The customer's payment method")
+    MonthlyCharges: float = Field(..., examples=[29.85], description="The amount charged to the customer monthly")
+    TotalCharges: float = Field(..., examples=[29.85], description="The total amount charged to the customer")
 
 
 class PredictionResponse(BaseModel):

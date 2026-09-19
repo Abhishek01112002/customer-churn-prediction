@@ -40,10 +40,18 @@ def save_object(obj, filepath):
 def load_object(filepath):
     """
     Loads a python object from a filepath using pickle.
+    Gracefully detects un-downloaded Git LFS pointer files.
     """
     logger = get_logger(__name__)
     try:
         with open(filepath, 'rb') as f:
+            header = f.read(7)
+            if header == b"version":
+                raise ValueError(
+                    f"File at '{filepath}' is a Git LFS pointer text file, not the actual binary file. "
+                    "Please run 'git lfs pull' or enable 'lfs: true' in your checkout action."
+                )
+            f.seek(0)
             obj = pickle.load(f)
         logger.info(f"Successfully loaded object from {filepath}")
         return obj

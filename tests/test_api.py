@@ -6,9 +6,14 @@ from fastapi.testclient import TestClient
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app.api import app
 
-client = TestClient(app)
+import pytest
 
-def test_api_read_root():
+@pytest.fixture
+def client():
+    with TestClient(app) as c:
+        yield c
+
+def test_api_read_root(client):
     response = client.get("/")
     assert response.status_code == 200
     json_data = response.json()
@@ -90,7 +95,7 @@ def test_api_explain_single():
         assert "prediction_score" in json_data
         assert isinstance(json_data["shap_values"], dict)
 
-def test_api_get_metrics():
+def test_api_get_metrics(client):
     response = client.get("/metrics")
     assert response.status_code == 200
     json_data = response.json()
