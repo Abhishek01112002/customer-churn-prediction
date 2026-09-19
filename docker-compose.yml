@@ -12,6 +12,11 @@ services:
       - ./models:/app/models
     environment:
       - PORT=8000
+      # API key for protecting prediction endpoints.
+      # Override with a strong secret in production (e.g. via a .env file).
+      - API_KEY=${API_KEY:-changeme}
+      # Comma-separated list of allowed CORS origins.
+      - ALLOWED_ORIGINS=http://localhost:8501,http://churn_frontend:8501
 
   frontend:
     build:
@@ -24,5 +29,7 @@ services:
       - ./models:/app/models
     environment:
       - BACKEND_URL=http://backend:8000
+      # Forward the same API key so the Streamlit app can authenticate with the backend.
+      - API_KEY=${API_KEY:-changeme}
     depends_on:
       - backend
