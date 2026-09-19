@@ -181,19 +181,19 @@ def get_feature_importance(pipeline):
         has_coef = hasattr(classifier, 'coef_')
 
         if has_fi or has_coef:
-            cat_features = list(config.CATEGORICAL_FEATURES)
-            if 'tenure_group' not in cat_features:
-                cat_features.append('tenure_group')
-
-            ohe = preprocessor.named_transformers_['cat']
-            cat_feature_names = ohe.get_feature_names_out(cat_features)
-
-            all_features = np.concatenate([config.NUMERICAL_FEATURES, cat_feature_names])
-
             if has_fi:
-                importances = classifier.feature_importances_
+                importances = np.asarray(classifier.feature_importances_, dtype=float)
             else:
-                importances = np.abs(classifier.coef_[0])
+                importances = np.abs(np.asarray(classifier.coef_[0], dtype=float))
+
+            try:
+                raw_names = preprocessor.get_feature_names_out()
+                all_features = [f.split('__', 1)[-1] if '__' in f else f for f in raw_names]
+            except Exception:
+                all_features = [f"Feature_{i}" for i in range(len(importances))]
+
+            if len(all_features) != len(importances):
+                all_features = [f"Feature_{i}" for i in range(len(importances))]
 
             # Normalize so importances sum to 1
             if importances.sum() > 0:
@@ -255,12 +255,19 @@ def explain_single_customer(customer_data: dict, base_pipeline, top_n: int = 10)
         classifier = classifier.calibrated_classifiers_[0].estimator
 
     # Build feature names for the transformed matrix
-    cat_features = list(config.CATEGORICAL_FEATURES)
-    if 'tenure_group' not in cat_features:
-        cat_features.append('tenure_group')
-    ohe = preprocessor.named_transformers_['cat']
-    cat_feature_names = list(ohe.get_feature_names_out(cat_features))
-    all_feature_names = list(config.NUMERICAL_FEATURES) + cat_feature_names
+    try:
+        raw_feature_names = preprocessor.get_feature_names_out()
+        all_feature_names = [f.split('__', 1)[-1] if '__' in f else f for f in raw_feature_names]
+    except Exception:
+        cat_features = list(config.CATEGORICAL_FEATURES)
+        if 'tenure_group' not in cat_features:
+            cat_features.append('tenure_group')
+        try:
+            ohe = preprocessor.named_transformers_['cat']
+            cat_feature_names = list(ohe.get_feature_names_out(cat_features))
+        except Exception:
+            cat_feature_names = []
+        all_feature_names = list(config.NUMERICAL_FEATURES) + cat_feature_names
 
     # Choose the fastest compatible explainer
     if hasattr(classifier, 'feature_importances_'):
@@ -298,6 +305,10 @@ def explain_single_customer(customer_data: dict, base_pipeline, top_n: int = 10)
 
     # Flatten the row for the single customer record
     shap_row = np.asarray(shap_arr)[0].flatten()
+
+    # Ensure all_feature_names length matches shap_row length
+    if len(all_feature_names) != len(shap_row):
+        all_feature_names = [f"Feature_{i}" for i in range(len(shap_row))]
 
     # Pair each feature with its attribution scalar float
     raw_pairs = sorted(

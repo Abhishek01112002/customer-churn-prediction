@@ -24,22 +24,17 @@ BASE_MODEL_PATH = os.path.join(MODEL_DIR, f'base_model_{VERSION}.pkl')
 
 # Feature sets
 TARGET = 'Churn'
-
-# Truly continuous / ordinal numeric features fed to StandardScaler
 NUMERICAL_FEATURES = [
     'tenure', 'MonthlyCharges', 'TotalCharges',
-    'Number_of_Services', 'Monthly_to_Total_Ratio', 'Avg_Charges_Per_Month',
-    # Binary engineered features kept as numeric (0/1) — NOT passed to OHE
-    'SeniorCitizen', 'Is_Automatic_Payment', 'Has_Internet',
+    'Number_of_Services', 'Monthly_to_Total_Ratio', 'Avg_Charges_Per_Month'
 ]
-
-# Purely categorical (string) features fed to OneHotEncoder
 CATEGORICAL_FEATURES = [
-    'gender', 'Partner', 'Dependents',
+    'gender', 'SeniorCitizen', 'Partner', 'Dependents',
     'PhoneService', 'MultipleLines', 'InternetService',
     'OnlineSecurity', 'OnlineBackup', 'DeviceProtection',
     'TechSupport', 'StreamingTV', 'StreamingMovies',
     'Contract', 'PaperlessBilling', 'PaymentMethod',
+    'Is_Automatic_Payment', 'Has_Internet'
 ]
 
 # Random state for reproducibility
