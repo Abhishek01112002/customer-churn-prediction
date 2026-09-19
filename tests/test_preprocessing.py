@@ -78,7 +78,9 @@ def test_preprocess_inference_data_missing_total_charges():
     from src.predict import preprocess_inference_data
     df_clean = preprocess_inference_data(df)
     
-    # Check that empty TotalCharges was handled and filled
-    assert df_clean['TotalCharges'].iloc[0] == 0.0
+    # Check that empty TotalCharges was handled and filled with the training median
+    from src.predict import _load_tc_median
+    assert df_clean['TotalCharges'].iloc[0] == _load_tc_median()
+    assert not np.isnan(df_clean['TotalCharges'].iloc[0])
     # Check tenure group category
     assert df_clean['tenure_group'].iloc[0] == '25-36'

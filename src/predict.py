@@ -242,7 +242,11 @@ def explain_single_customer(customer_data: dict, base_pipeline, top_n: int = 10)
 
     # Transform input through the preprocessor step only
     preprocessor = base_pipeline.named_steps['preprocessor']
-    X_transformed = preprocessor.transform(df_preprocessed)
+    # Ensure X_transformed is a dense 2D float array
+    if hasattr(X_transformed, 'toarray'):
+        X_dense = X_transformed.toarray().astype(float)
+    else:
+        X_dense = np.asarray(X_transformed, dtype=float)
 
     # Retrieve the classifier (unwrap CalibratedClassifierCV if needed)
     classifier = base_pipeline.named_steps['classifier']
@@ -261,28 +265,48 @@ def explain_single_customer(customer_data: dict, base_pipeline, top_n: int = 10)
     if hasattr(classifier, 'feature_importances_'):
         # Tree-based models (XGBoost, RandomForest, DecisionTree)
         explainer = shap.TreeExplainer(classifier)
-        shap_vals = explainer.shap_values(X_transformed)
-        # For binary classifiers, shap_values may be a list [class0, class1]
-        if isinstance(shap_vals, list):
-            shap_vals = shap_vals[1]
-        base_value = float(explainer.expected_value[1]) if isinstance(explainer.expected_value, (list, np.ndarray)) else float(explainer.expected_value)
+        raw_shap = explainer.shap_values(X_dense)
+        exp_val = getattr(explainer, 'expected_value', 0.0)
     elif hasattr(classifier, 'coef_'):
         # Linear models (LogisticRegression)
-        explainer = shap.LinearExplainer(classifier, X_transformed)
-        shap_vals = explainer.shap_values(X_transformed)
-        base_value = float(explainer.expected_value)
+        explainer = shap.LinearExplainer(classifier, X_dense)
+        raw_shap = explainer.shap_values(X_dense)
+        exp_val = getattr(explainer, 'expected_value', 0.0)
     else:
         raise ValueError(f"No compatible SHAP explainer for classifier type: {type(classifier)}")
 
-    shap_row = shap_vals[0]  # single customer
+    # Extract base value as a single scalar float
+    if isinstance(exp_val, (list, tuple, np.ndarray)):
+        base_value = float(exp_val[1]) if len(exp_val) > 1 else float(exp_val[0])
+    else:
+        base_value = float(exp_val)
+
+    # Extract class 1 (churn / positive class) attributions
+    if isinstance(raw_shap, list):
+        # List of arrays [class 0, class 1]
+        shap_arr = raw_shap[1] if len(raw_shap) > 1 else raw_shap[0]
+    elif hasattr(raw_shap, 'values'):
+        # shap.Explanation object
+        shap_arr = raw_shap.values
+    else:
+        shap_arr = np.asarray(raw_shap)
+
+    # If 3D array (samples, features, classes), slice out class 1
+    if shap_arr.ndim == 3:
+        shap_arr = shap_arr[:, :, 1] if shap_arr.shape[2] > 1 else shap_arr[:, :, 0]
+
+    # Flatten the row for the single customer record
+    shap_row = np.asarray(shap_arr)[0].flatten()
+
+    # Pair each feature with its attribution scalar float
     raw_pairs = sorted(
-        zip(all_feature_names, shap_row.tolist()),
+        zip(all_feature_names, [float(v) for v in shap_row]),
         key=lambda x: abs(x[1]),
         reverse=True
     )
 
     top_pairs = raw_pairs[:top_n]
-    shap_dict = {feat: round(val, 6) for feat, val in top_pairs}
+    shap_dict = {feat: round(float(val), 6) for feat, val in top_pairs}
     prediction_score = round(float(np.sum(shap_row)) + base_value, 6)
 
     return {
