@@ -15,19 +15,19 @@ shap==0.46.0
 # API server
 fastapi==0.115.6
 uvicorn[standard]==0.32.1
-python-multipart==0.0.20
+python-multipart==0.0.31
 pydantic==2.10.4
 
 # Frontend
-streamlit==1.41.1
+streamlit==1.54.0
 plotly==5.24.1
-pillow==11.1.0
+pillow==12.3.0
 
 # Visualisation
 matplotlib==3.9.4
 seaborn==0.13.2
 
 # Utilities
-requests==2.32.3
+requests==2.33.0
 tabulate==0.9.0
 jupyter==1.1.1
