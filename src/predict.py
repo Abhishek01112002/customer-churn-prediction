@@ -242,6 +242,7 @@ def explain_single_customer(customer_data: dict, base_pipeline, top_n: int = 10)
 
     # Transform input through the preprocessor step only
     preprocessor = base_pipeline.named_steps['preprocessor']
+    X_transformed = preprocessor.transform(df_preprocessed)
     # Ensure X_transformed is a dense 2D float array
     if hasattr(X_transformed, 'toarray'):
         X_dense = X_transformed.toarray().astype(float)

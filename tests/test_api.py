@@ -21,7 +21,7 @@ def test_api_read_root(client):
     assert "model_loaded" in json_data
     assert "version" in json_data
 
-def test_api_predict_single():
+def test_api_predict_single(client):
     customer = {
         'gender': 'Female',
         'SeniorCitizen': 0,
@@ -44,26 +44,24 @@ def test_api_predict_single():
         'TotalCharges': 29.85
     }
     
-    # We trigger the startup events manually inside TestClient context
-    with TestClient(app) as tc:
-        # 1. Unauthorized without header
-        unauth_resp = tc.post("/predict", json=customer)
-        assert unauth_resp.status_code == 401
+    # 1. Unauthorized without header
+    unauth_resp = client.post("/predict", json=customer)
+    assert unauth_resp.status_code == 401
 
-        # 2. Forbidden with invalid key
-        forbidden_resp = tc.post("/predict", json=customer, headers={"X-API-Key": "wrong-key"})
-        assert forbidden_resp.status_code == 403
+    # 2. Forbidden with invalid key
+    forbidden_resp = client.post("/predict", json=customer, headers={"X-API-Key": "wrong-key"})
+    assert forbidden_resp.status_code == 403
 
-        # 3. Authorized request
-        response = tc.post("/predict", json=customer, headers={"X-API-Key": "changeme"})
-        assert response.status_code == 200
-        json_data = response.json()
-        assert "churn_probability" in json_data
-        assert "prediction" in json_data
-        assert "risk_level" in json_data
-        assert json_data["risk_level"] in ["Low", "Medium", "High"]
+    # 3. Authorized request
+    response = client.post("/predict", json=customer, headers={"X-API-Key": "changeme"})
+    assert response.status_code == 200
+    json_data = response.json()
+    assert "churn_probability" in json_data
+    assert "prediction" in json_data
+    assert "risk_level" in json_data
+    assert json_data["risk_level"] in ["Low", "Medium", "High"]
 
-def test_api_explain_single():
+def test_api_explain_single(client):
     customer = {
         'gender': 'Female',
         'SeniorCitizen': 0,
@@ -85,15 +83,14 @@ def test_api_explain_single():
         'MonthlyCharges': 29.85,
         'TotalCharges': 29.85
     }
-    with TestClient(app) as tc:
-        response = tc.post("/explain", json=customer, headers={"X-API-Key": "changeme"})
-        assert response.status_code == 200
-        json_data = response.json()
-        assert "churn_probability" in json_data
-        assert "shap_values" in json_data
-        assert "base_value" in json_data
-        assert "prediction_score" in json_data
-        assert isinstance(json_data["shap_values"], dict)
+    response = client.post("/explain", json=customer, headers={"X-API-Key": "changeme"})
+    assert response.status_code == 200
+    json_data = response.json()
+    assert "churn_probability" in json_data
+    assert "shap_values" in json_data
+    assert "base_value" in json_data
+    assert "prediction_score" in json_data
+    assert isinstance(json_data["shap_values"], dict)
 
 def test_api_get_metrics(client):
     response = client.get("/metrics")
