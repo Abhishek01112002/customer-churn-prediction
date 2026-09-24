@@ -1,0 +1,14 @@
+name: Demo Keepalive
+
+on:
+  schedule:
+    - cron: "23 */12 * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wake Streamlit demo
+        run: |
+          curl --fail --silent --show-error --max-time 30 https://customer-churn-prediction-by-abhishek.streamlit.app/ > /dev/null
